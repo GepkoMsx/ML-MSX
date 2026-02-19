@@ -11,7 +11,7 @@ The product should be fully functional on standard hardware, meaning:
 - Works with expansions, especially storage solutions (sd card, msx-dos2, nextor drives)
 
 ## Setup
-To build software we need tools. All the work is done on a modern windows 11 PC. 
+To build software we need tools. All the work is done on a modern windows 11 PC.  
 Software tools used:
 - [openMSX v21](https://github.com/openMSX/openMSX): MSX Emulator for the pc.
 - [vscode](https://code.visualstudio.com/download): Visual studio code editor/IDE
@@ -22,5 +22,5 @@ Software tools used:
   - Png2sc8: Converts a png image to a screen8-bytestream.
   - Png2sc5: Converts a png image to a screen5-bytestream.
   - RLE encode: Encodes a binary file with a form of RLE comression. 
-
+  
 Information used:
