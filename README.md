@@ -14,18 +14,3 @@ The product should be fully functional on standard hardware, meaning:
 - Learn the basics, building a library/toolbox.
 - Build a game as excersize: The boardgame [Azul](https://www.nextmove-games.com/en/azul/).  (Buy the game if you like it!)
 
-## Setup
-To build software we need tools. All the work is done on a modern windows 11 PC.  
-Software tools used:
-- [openMSX v21](https://github.com/openMSX/openMSX): MSX Emulator for the pc.
-- [vscode](https://code.visualstudio.com/download): Visual studio code editor/IDE
-- [Vasm 1.9a](http://sun.hasenbraten.de/vasm/): A Z80 assembler to assemble to the code.
-- [Disk-Manager 0.17](https://www.lexlechz.at/en/software/DiskMgr.html): A tool to write DKS files to floppy disks.
-- [Corel PaintSHop Pro](https://www.paintshoppro.com/en/products/paintshop-pro/standard/): Editing pictuers.
-- Home-made tools in [visualstudio](https://visualstudio.microsoft.com/), in c#.
-  - Symbol file reducer: removes extra comments etc from the symbol file, to make it more compact.
-  - Png2sc8: Converts a png image to a screen8-bytestream.
-  - Png2sc5: Converts a png image to a screen5-bytestream.
-  - RLE encode: Encodes a binary file with a form of RLE comression. 
-  
-Information used:
