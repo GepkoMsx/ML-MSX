@@ -10,6 +10,10 @@ The product should be fully functional on standard hardware, meaning:
 - Works on real hardware without midifcations
 - Works with expansions, especially storage solutions (sd card, msx-dos2, nextor drives)
 
+## Current Projects
+- Learn the basics, building a library/toolbox.
+- Build a game as excersize: The boardgame [Azul](https://www.nextmove-games.com/en/azul/).  (Buy the game if you like it!)
+
 ## Setup
 To build software we need tools. All the work is done on a modern windows 11 PC.  
 Software tools used:
