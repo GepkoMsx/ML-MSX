@@ -17,6 +17,7 @@ Software tools used:
 - [vscode](https://code.visualstudio.com/download): Visual studio code editor/IDE
 - [Vasm 1.9a](http://sun.hasenbraten.de/vasm/): A Z80 assembler to assemble to the code.
 - [Disk-Manager 0.17](https://www.lexlechz.at/en/software/DiskMgr.html): A tool to write DKS files to floppy disks.
+- [Corel PaintSHop Pro](https://www.paintshoppro.com/en/products/paintshop-pro/standard/): Editing pictuers.
 - Home-made tools in [visualstudio](https://visualstudio.microsoft.com/), in c#.
   - Symbol file reducer: removes extra comments etc from the symbol file, to make it more compact.
   - Png2sc8: Converts a png image to a screen8-bytestream.
