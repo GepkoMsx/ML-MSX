@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "png2msxSc5": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\MSX\\azul\\example.png -cmap D:\\MSX\\azul\\exampleCM.txt"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+**/*.sym
+.vscode
+**/obj
+**/bin
+**/.vs
+vasm

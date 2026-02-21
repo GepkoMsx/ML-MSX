@@ -1,0 +1,16 @@
+    db $76, $07 ; Kleur 0
+    db $02, $01 ; Kleur 1
+    db $05, $04 ; Kleur 2
+    db $63, $05 ; Kleur 3
+    db $47, $06 ; Kleur 4
+    db $74, $07 ; Kleur 5
+    db $74, $04 ; Kleur 6
+    db $54, $04 ; Kleur 7
+    db $77, $07 ; Kleur 8
+    db $00, $00 ; Kleur 9
+    db $71, $05 ; Kleur 10
+    db $00, $00 ; Kleur 11
+    db $00, $00 ; Kleur 12
+    db $00, $00 ; Kleur 13
+    db $00, $00 ; Kleur 14
+    db $00, $00 ; Kleur 15
