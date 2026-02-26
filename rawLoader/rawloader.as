@@ -1,3 +1,5 @@
+; RAW loader: loads files from disk directly, no bios, no msx-dos.
+;
 ; ==[ Constants ]===============================================
     include "Constants.as"
 
