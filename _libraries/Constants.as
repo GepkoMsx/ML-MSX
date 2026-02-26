@@ -1,37 +1,33 @@
 ;; BIOS Calls
-;; ----------
 
-;; geheugen
+;; Memory
 CALSLT  equ $001C       ; Inter-slot calls. Input: IYh: SlotId, IYl:0, IX:doeladres.
 EXTBIO  equ $FFCA       ; Extended BIOS (ex: memory mapper of msx-dos2)
 MAPTBL  equ $F247       ; MSX-DOS 2 memory map table.
 EXPTBL  equ $FCC1       ; Expanded slots table.
 
-;; scherm
+;; Display
 CHGMOD  equ $005F       ; Zet de screen mode en wis scherm. Input: a: screen mode. Output: niets.
+VDPD    equ $98         ; VDP Data port      (lees en schrijf data)
+VDPC    equ $99         ; VDP Control Port   (instellen vram adres, schrijf registers R0-R7, lees status S0-)
+VDPP    equ $9A         ; VDP Pallette poort (instellen kleuren: 2x R/B en dan G)
+VDPR    equ $9B         ; VDP Registers      (schrijf resisters R8-46 via r17, en sturen pixeldata voor commandos)
 
-;; keyboard
+;; Keyboard
 CHPUT   equ $00A2       ; Print een karacter op het scherm. Input: a: karacter code. Output: niets.
 CHGET   equ $009F       ; Wacht en lees een karacter van het toetsenbord. Input: niets. Output: a: karacter code.
 CHSNS   equ $009C       ; Lees de status van het toetsenbord. Input: niets. Output: Zero flag: 0 = er is een toets ingedrukt, 1 = er is geen toets ingedrukt.
 SNSMAT  equ $0141       ; Lees de status van de keyboard matrix. Input: a: te lezen rij. Output: a: status van rij. Zie info.txt
 
-;; diskdrive            ; altijd met calslt!
+;; Diskdrive            ; altijd met calslt!
 PHYDIO: equ $4010       ; Fysieke schijf I/O. Zie info.txt
-
-;; IO ports
-VDPD    equ $98         ;VDP Data port      (lees en schrijf data)
-VDPC    equ $99         ;VDP Control Port   (instellen vram adres, schrijf registers R0-R7, lees status S0-)
-VDPP    equ $9A         ;VDP Pallette poort (instellen kleuren: 2x R/B en dan G)
-VDPR    equ $9B         ;VDP Registers      (schrijf resisters R8-46 via r17, en sturen pixeldata voor commandos)
 
 ;; Interrupts/time
 JIFFY   equ $FC9E       ; address van nr of interrupts (50 or 60 per sec) 
-MSXID   equ $002B       ; de ID byte bit 7 heeft snelheid aan 950/60 hertz)
+MSXID   equ $002B       ; de ID byte bit 7 heeft snelheid aan 50/60 hertz)
 
 ;; MSX-DOS 1
 BDOS   equ $0005        ; dos calls
-FCB    equ $005C        ; default FCB File control block
 
 ;; Shared Data Block
 STARTDATA   equ $104   
@@ -43,5 +39,3 @@ MEMMAPTBL   equ STARTDATA+3     ;2  [--2] address of MAPTBL                     
 MEMSET      equ STARTDATA+5     ;3  [012] jump to right set-page function   (new page)           DOSVersion.asc
 MEMRESET    equ STARTDATA+8     ;3  [012] jump to right reset-page function (old page)           DOSVersion.asc
 MEMSEGMENTS equ STARTDATA+11    ;16 [012] Array of segment requested			                 memLoadSegment.asc
-
-
