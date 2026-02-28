@@ -23,9 +23,9 @@ NROFILES: equ 3         ; Aantal bestanden die geladen moeten worden.
     ld BC, $0402            ; B = segmentindex, C =  Page (hello1 -> $8300)
     CALL MEMRESET
 
-    call $4000
-    call $8300
+    call GameLoop
 
+EXIT:
     LD C, $00           ; Exit do MSXDOS
     CALL BDOS           
     ret
@@ -34,6 +34,8 @@ NROFILES: equ 3         ; Aantal bestanden die geladen moeten worden.
     include "memPack.inc"
     include "dosloader.asc"
 
+    include "GetActionKeys.asc"
+    include "gameloop.asc"
 ; ==[ Data ]====================================================
 
 FILENAME:               ; vergeet NROFILES niet bij te werken als je hier iets aanpast!
@@ -45,5 +47,8 @@ FILENAME:               ; vergeet NROFILES niet bij te werken als je hier iets a
 
     db "HELLO2  BIN", $00, $80, $05, $00    
     db "HELLO3  BIN", $00, $40, $84, $01
+
+COUNTER:
+    db $00, $00
 
 FileEnd:
