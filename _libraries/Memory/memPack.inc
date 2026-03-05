@@ -1,5 +1,5 @@
 ; ==[ Memory Libraries ]===============================================
-
+    
     include "DOSVersion.asc"
     include "memMapCheck.asc"
     include "memSwapPage1.asc"
