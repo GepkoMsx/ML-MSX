@@ -2,6 +2,8 @@ const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs'); 
 
+
+
 function formatLineText(originalText) {
     if (originalText.trim().startsWith(';')) {
         // only comment.
@@ -11,19 +13,19 @@ function formatLineText(originalText) {
     const parts = originalText.split(';');
     const codePart = parts[0].trim();
     const commentPart = parts.slice(1).join(';').trim();
+    const tab = (codePart.endsWith(":")) ? "" : "    ";
 
     const targetColumn = 29;
-    const tabWidth = 4;
-    const paddingCount = targetColumn - tabWidth - codePart.length;
+    const paddingCount = targetColumn - codePart.length - tab.length;
     const padding = " ".repeat(Math.max(1, paddingCount));
 
     if (parts.length == 1) {
         // no comment
-        return `\t${codePart}`;
+        return `${tab}${codePart}`;
     } 
 
     // code + comment
-    return `\t${codePart}${padding}; ${commentPart}`;
+    return `${tab}${codePart}${padding}; ${commentPart}`;
 }
 
 function formatWholeDocument(document) {
@@ -40,7 +42,6 @@ function formatWholeDocument(document) {
 
 class OnEnterFormatter {
     provideOnTypeFormattingEdits(document, position, ch, options) {
-vscode.window.showInformationMessage("Formatter getriggerd!");
 
         const line = document.lineAt(position.line);
         const edits = [];
@@ -118,27 +119,28 @@ function activate(context) {
         }
     };
 
-    const editDocument = document => {
-        vscode.window.showInformationMessage("Formatter actief lang=" + document.languageId);
-        if (document.languageId === 'z80') {
-            const edit = new vscode.WorkspaceEdit();
-            for (let i = 0; i < document.lineCount; i++) {
-                const line = document.lineAt(i);
-                const formatted = formatLineText(line.text);
-                if (formatted !== line.text) {
-                    edit.replace(document.uri, line.range, formatted);
+    const selector = { language: 'z80' };
+
+    let lastLineIndex = -1;
+    context.subscriptions.push(
+        vscode.window.onDidChangeTextEditorSelection(event => {
+            const editor = event.textEditor;
+            const currentLineIndex = editor.selection.active.line;
+            const document = editor.document;
+
+            if (lastLineIndex !== -1 && lastLineIndex !== currentLineIndex && document.languageId === 'z80') {
+                const lineToFormat = document.lineAt(lastLineIndex);
+                const formatted = formatLineText(lineToFormat.text); // Jouw gedeelde functie
+
+                if (formatted !== lineToFormat.text) {
+                    const edit = new vscode.WorkspaceEdit();
+                    edit.replace(document.uri, lineToFormat.range, formatted);
+                    vscode.workspace.applyEdit(edit);
                 }
             }
-            vscode.workspace.applyEdit(edit);
-        }
-    };
-
-    const selector = { language: 'z80' };
-    // const selector = [
-    //     { pattern: '**/*.as' },
-    //     { pattern: '**/*.asc' },
-    //     { pattern: '**/*.inc' }
-    // ];
+            lastLineIndex = currentLineIndex;
+        })
+    );
 
     context.subscriptions.push(
         vscode.workspace.onDidOpenTextDocument(doc => {
