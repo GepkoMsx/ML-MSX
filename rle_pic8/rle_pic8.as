@@ -19,17 +19,17 @@ Main:
 
     ld HL, Screen8_Table
     call screen
-    call waitvdp
+    call Waitvdp
 
     ld a, 0                  ; set Border: Kleurnummer (0-15)
     out (#99), a             ; Stuur waarde naar poort #99
     ld a, $87                ; 128 (Register schrijven) + 7 (Registernummer)
     out (#99), a
-    call waitvdp
+    call Waitvdp
 
     ld HL, BLACKSCREEN       ; make screen black with hmmv
     call HMMV
-    call waitvdp
+    call Waitvdp
 
     ld HL, HMMCDATA
     call HMMCNoData          ; prepare copy picture.
@@ -42,8 +42,8 @@ theend:
     jr theend
 
     ld HL, Screen0_Table
-    call screen
-    call waitvdp
+    call Screen
+    call Waitvdp
     ld a, $F4                ; set Border: Kleurnummer (0-15)
     out (#99), a             ; Stuur waarde naar poort #99
     ld a, $87                ; 128 (Register schrijven) + 7 (Registernummer)
@@ -52,7 +52,7 @@ theend:
     ret
 
 ; ==[ libs ]====================================================
-    include "waitvdp.asc"
+    include ".asc"
     include "hmmcNoData.asc"
     include "RLESendVDP.asc"
     include "multiply.asc"

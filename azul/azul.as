@@ -45,7 +45,6 @@ Main3:
     include "azul3Playfield.asc"
     include "azul4EnterName.asc"
     
-    
 theend:
     ld DE, 50
     CALL Wait                ; Wait <DE> * 0.1 secs.

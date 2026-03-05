@@ -32,14 +32,13 @@ Main:
     ld a, 5
     call CHGMOD              ; goto screen 5;
 
-    call waitvdp
+    call Waitvdp
     call color0NotTransparent
 
-    call waitvdp
+    call Waitvdp
     ld HL, PaletteData
     call SetPalette16
 
-    ;call waitvdp
     ld HL, PixelData         ; optionally update the dx,dy on de HMMC header
     call HMMC                ; zet plaatje op scherm.
 

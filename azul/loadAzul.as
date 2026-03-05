@@ -21,8 +21,8 @@ NROFILES: equ 5              ; Nr of files
     call $8050
 
 EXIT:
-
-    include "returntodos.as"
+	; Exit the program and return to MSX-DOS
+	include "ReturnToDos.as"
 
 ; ==[ libraries ]====================================================
     include "memPack.inc"

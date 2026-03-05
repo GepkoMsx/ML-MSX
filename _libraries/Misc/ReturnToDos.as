@@ -4,7 +4,7 @@
     
 ; Exit the program and return to MSX-DOS
 ReturnToDos:
-    call waitvdp
+
     ld a, $60                ; Scherm aan ($40) + Interrupts aan ($20)
     out ($99), a
     ld a, $81                ; Schrijf naar Register #1
