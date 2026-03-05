@@ -17,39 +17,39 @@
 ;; Gebruikt routines:
 ;; - CompareStrings: Vergelijkt twee strings van een opgegeven lengte.
 
-    push bc             
-    push de             
-    ld HL, DISKBUF      ; Punt naar rootdirectory (Diskbuffer)
-    ld B, 112           ; Max aantal bestanden in rootdirectory
+    push bc
+    push de
+    ld HL, DISKBUF           ; Punt naar rootdirectory (Diskbuffer)
+    ld B, 112                ; Max aantal bestanden in rootdirectory
 
 FindFile_loop:
-    push bc             ; Bewaar BC (aantal bestanden)
-    ld b, 11            ; Aantal bytes om te vergelijken (filename is 8+3 bytes)
-    call CompareStrings ; Vergelijk bestandsnaam met huidige directory entry
-    pop bc              
-    jr z, FindFileOK    ; Als gevonden, ga naar door
+    push bc                  ; Bewaar BC (aantal bestanden)
+    ld b, 11                 ; Aantal bytes om te vergelijken (filename is 8+3 bytes)
+    call CompareStrings      ; Vergelijk bestandsnaam met huidige directory entry
+    pop bc
+    jr z, FindFileOK         ; Als gevonden, ga naar door
     push de
     ld de, $20
-    add HL, de          ; Ga naar volgende directory entry (32 bytes per entry)
+    add HL, de               ; Ga naar volgende directory entry (32 bytes per entry)
     pop de
-    djnz FindFile_loop  ; Ga naar volgende directory entry als niet gevonden
+    djnz FindFile_loop       ; Ga naar volgende directory entry als niet gevonden
 
 FindFileNOK:
-    ld a, 100           ; return integer voor "bestand niet gevonden op disk"    
-    jp RETERR           ; Bestand niet gevonden, terug naar BASIC
+    ld a, 100                ; return integer voor "bestand niet gevonden op disk"
+    jp RETERR                ; Bestand niet gevonden, terug naar BASIC
 
-FindFileOK:             ; Bestand gevonden.  Bewaar de info.
+FindFileOK:                  ; Bestand gevonden.  Bewaar de info.
     ld bc, 26
-    add hl, bc          ; HL wijst nu naar directory entry van het bestand
+    add hl, bc               ; HL wijst nu naar directory entry van het bestand
 
-    ex de, hl          
+    ex de, hl
     ld bc, 11
-    add hl, bc          ; DE wijst nu naar StartCluster in FILENAME structuur
-    ex de, hl           ; Herstel HL (wijst nog steeds naar directory entry)
+    add hl, bc               ; DE wijst nu naar StartCluster in FILENAME structuur
+    ex de, hl                ; Herstel HL (wijst nog steeds naar directory entry)
 
-    ld bc, 6            ; copy 6 byes van HL (directory entry) naar DE (FILENAME structuur)
-    ldir                ; dit zijn de 2 bytes startcluster + 4 bytes filesize
+    ld bc, 6                 ; copy 6 byes van HL (directory entry) naar DE (FILENAME structuur)
+    ldir                     ; dit zijn de 2 bytes startcluster + 4 bytes filesize
 
-    pop de              
-    pop bc      
+    pop de
+    pop bc
 ; ==[ End FindFile ]===============================================

@@ -20,23 +20,23 @@
     include "memPrepare.as"
 
     ; exta tests for now
-    ld BC, $0202              ; index 2 in page 2
-    call MEMSET     
-    ld BC, $0301              ; index 3 in page 1
-    call MEMSET                                     ; 64 kb
+    ld BC, $0202             ; index 2 in page 2
+    call MEMSET
+    ld BC, $0301             ; index 3 in page 1
+    call MEMSET              ; 64 kb
 
-    ld BC, $0402              ; index 4 in page 2
-    call MEMSET     
-    ld BC, $0501              ; index 5 in page 1
-    call MEMSET                                     ; 96 kb (MAX MSX-DOS 1 without extentions)
+    ld BC, $0402             ; index 4 in page 2
+    call MEMSET
+    ld BC, $0501             ; index 5 in page 1
+    call MEMSET              ; 96 kb (MAX MSX-DOS 1 without extentions)
 
-    ld BC, $0001              ; index 0 in page 1
-    call MEMRESET     
+    ld BC, $0001             ; index 0 in page 1
+    call MEMRESET
 
-backtodos:    
-    LD C, $00           ; Exit do MSX-DOS
-    CALL BDOS           
-    ret                 
+backtodos:
+    LD C, $00                ; Exit do MSX-DOS
+    CALL BDOS
+    ret
 
 
 ; ==[ Libraries ]===============================================

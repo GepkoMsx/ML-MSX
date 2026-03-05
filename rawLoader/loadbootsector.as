@@ -18,21 +18,21 @@
 ;; - PHYDIO:         Fysieke schijf I/O. Zie info.txt
 ;; - CALSLT:         Inter-slot calls. Zie info.txt
 
-    ld a, (DISKSLOT)     ; Haal slotnummer van diskrom
-    ld iyh, a            
+    ld a, (DISKSLOT)         ; Haal slotnummer van diskrom
+    ld iyh, a
     ld ix, PHYDIO
-    or a                ; Carry flag 0 = Lezen (1 = Schrijven) (force carry = 0)
-    ld a, 0             ; Drive A: (0=A, 1=B)
-    ld b, 1             ; Aantal sectoren om te lezen
-    ld c, $F9           ; Media Descriptor (F8/F9)
-    ld de, 0            ; Start sectornummer (0 = bootsector)
-    ld hl, DISKBUF      ; Bestemmingsadres in RAM
-    call CALSLT         ; Roep BIOS inter-slot call aan
+    or a                     ; Carry flag 0 = Lezen (1 = Schrijven) (force carry = 0)
+    ld a, 0                  ; Drive A: (0=A, 1=B)
+    ld b, 1                  ; Aantal sectoren om te lezen
+    ld c, $F9                ; Media Descriptor (F8/F9)
+    ld de, 0                 ; Start sectornummer (0 = bootsector)
+    ld hl, DISKBUF           ; Bestemmingsadres in RAM
+    call CALSLT              ; Roep BIOS inter-slot call aan
 
-    jp c, RETERR        ; Als Carry=1, dan fout.
-                        ; De sector staat nu op $A000
-    ld a, (DISKBUF + $15) ; Lees Media Descriptor Byte uit bootsector (offset $15)
-    ld (MEDIADESC), a   ; Sla media descriptor op voor later gebruik
-    cp $F8              ; Is het een 360kb disk?
+    jp c, RETERR             ; Als Carry=1, dan fout.
+                             ; De sector staat nu op $A000
+    ld a, (DISKBUF + $15)    ; Lees Media Descriptor Byte uit bootsector (offset $15)
+    ld (MEDIADESC), a        ; Sla media descriptor op voor later gebruik
+    cp $F8                   ; Is het een 360kb disk?
 
 ; ==[ End LOADBOOTSECTOR ]===============================================

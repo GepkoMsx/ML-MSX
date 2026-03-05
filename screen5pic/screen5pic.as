@@ -26,11 +26,11 @@
     include "BloadHeader.as"
 
 ; ==[ Program ]=================================================
-Main:                   
-    push iy             ; Bewaar IY register heeft basic nodig na ret.
+Main:
+    push iy                  ; Bewaar IY register heeft basic nodig na ret.
     
     ld a, 5
-    call CHGMOD         ; goto screen 5;
+    call CHGMOD              ; goto screen 5;
 
     call waitvdp
     call color0NotTransparent
@@ -40,14 +40,11 @@ Main:
     call SetPalette16
 
     ;call waitvdp
-    ld HL, PixelData    ; optionally update the dx,dy on de HMMC header
-    call HMMC           ; zet plaatje op scherm.
+    ld HL, PixelData         ; optionally update the dx,dy on de HMMC header
+    call HMMC                ; zet plaatje op scherm.
 
 klaar:
     jp klaar
-
-
-   
 
 ; ==[ libs ]====================================================
     include "waitvdp.asc"
