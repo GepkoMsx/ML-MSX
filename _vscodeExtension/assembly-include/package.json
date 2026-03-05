@@ -1,0 +1,19 @@
+{
+  "name": "asembly-include",
+  "publisher": "GepkoSterringa",
+  "version": "1.0.0",
+  "engines": { "vscode": "^1.70.0" },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:z80",
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "z80",
+        "extensions": [".as", ".asc", ".inc"]
+      }
+    ]
+  }
+}
