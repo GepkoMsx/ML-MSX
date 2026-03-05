@@ -5,6 +5,10 @@ const fs = require('fs');
 
 
 function formatLineText(originalText) {
+    if (!originalText) {
+        return originalText;
+    }
+
     if (originalText.trim().startsWith(';')) {
         // only comment.
         return originalText; 
@@ -13,7 +17,7 @@ function formatLineText(originalText) {
     const parts = originalText.split(';');
     const codePart = parts[0].trim();
     const commentPart = parts.slice(1).join(';').trim();
-    const tab = (codePart.endsWith(":")) ? "" : "    ";
+    const tab = (codePart.includes(":")) ? "" : "    ";
 
     const targetColumn = 29;
     const paddingCount = targetColumn - codePart.length - tab.length;
@@ -124,21 +128,25 @@ function activate(context) {
     let lastLineIndex = -1;
     context.subscriptions.push(
         vscode.window.onDidChangeTextEditorSelection(event => {
-            const editor = event.textEditor;
-            const currentLineIndex = editor.selection.active.line;
-            const document = editor.document;
+            try {
+                const editor = event.textEditor;
+                const currentLineIndex = editor.selection.active.line;
+                const document = editor.document;
 
-            if (lastLineIndex !== -1 && lastLineIndex !== currentLineIndex && document.languageId === 'z80') {
-                const lineToFormat = document.lineAt(lastLineIndex);
-                const formatted = formatLineText(lineToFormat.text); // Jouw gedeelde functie
+                if (lastLineIndex !== -1 && lastLineIndex !== currentLineIndex && document.languageId === 'z80') {
+                    const lineToFormat = document.lineAt(lastLineIndex);
+                    const formatted = formatLineText(lineToFormat.text); // Jouw gedeelde functie
 
-                if (formatted !== lineToFormat.text) {
-                    const edit = new vscode.WorkspaceEdit();
-                    edit.replace(document.uri, lineToFormat.range, formatted);
-                    vscode.workspace.applyEdit(edit);
+                    if (formatted !== lineToFormat.text) {
+                        const edit = new vscode.WorkspaceEdit();
+                        edit.replace(document.uri, lineToFormat.range, formatted);
+                        vscode.workspace.applyEdit(edit);
+                    }
                 }
+                lastLineIndex = currentLineIndex;
+            } catch (err) { 
+                console.error("formatting error:", err);
             }
-            lastLineIndex = currentLineIndex;
         })
     );
 
