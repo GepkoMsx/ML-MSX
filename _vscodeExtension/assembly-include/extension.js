@@ -17,10 +17,12 @@ function formatLineText(originalText) {
     const parts = originalText.split(';');
     const codePart = parts[0].trim();
     const commentPart = parts.slice(1).join(';').trim();
-    const tab = (codePart.includes(":")) ? "" : "    ";
+    let tab = "    ";
+    if (codePart.includes(":") || codePart.includes(" equ ")) {
+        tab = "";
+    }
 
-    const targetColumn = 29;
-    const paddingCount = targetColumn - codePart.length - tab.length;
+    const paddingCount = 29 - codePart.length - tab.length;
     const padding = " ".repeat(Math.max(1, paddingCount));
 
     if (parts.length == 1) {
