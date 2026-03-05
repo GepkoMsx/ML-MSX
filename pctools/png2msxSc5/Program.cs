@@ -85,7 +85,7 @@ internal class Program
         }
 
         var color = GetColorByte(image.GetPixel(0, 0), image.GetPixel(1, 0));
-        WriteHMMCheader(handle, image.Width, image.Height, txt, color);
+        //WriteHMMCheader(handle, image.Width, image.Height, txt, color);
 
         if (txt) 
         { 
@@ -119,9 +119,13 @@ internal class Program
                 handle.WriteLine();
             }
         }
-
+        handle.Close();
+        
+        outfile = Path.ChangeExtension(infile, "color");
+        File.Delete(outfile);
+        handle = File.OpenWrite(outfile);
         // add colors:
-        WriteColorMap(handle, txt);
+        WriteColorMap(handle, true);
 
         handle.Close();
     }
@@ -217,16 +221,16 @@ internal class Program
     }
     private static void ReadColorMap(string file)
     {
-        // skip all lines that dont hav e "db ", then check if we have 16 lines with 2 bytes each, and populate _colorMap accordingly.
+        // skip all lines that dont have "db ", then check if we have 16 lines with 2 bytes each, and populate _colorMap accordingly.
         var lines = File.ReadAllLines(file);
         var list = lines.Where(l => l.Contains("db "));
-        if (list.Count() != 16)
+        if (list.Count() > 16)
         {
-            Console.WriteLine("Error: Color map file should have exactly 16 lines with 'db ' statements!");
+            Console.WriteLine("Error: Color map file should have 16 or less lines with 'db ' statements!");
             Environment.Exit(1);
         }
 
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < list.Count(); i++)
         {
             var line = list.ElementAt(i);
             var noComments = line.Split(';')[0]; // remove comments

@@ -4,7 +4,7 @@ Console.WriteLine("RLE Encoder 8 bits");
 
 //args[0] is the filename.
 
-/*
+/* RLE1:
 De Gepko variant..
 •	Bytes worden onveranderd doorgelaten (RAW), behalve $01
 $01 is de “control byte”
@@ -19,7 +19,7 @@ Uitbreiding:
 •	1e byte van het bestand is de controlbyte. (en wordt verder niet gebruikt)
 Dit geeft de mogelijkheid om de “minst voorkomende” kleur te kiezen als control.
 
-DAARNA:
+DAARNA PATTERN:
 •	De 256 meest voorkomende 3-byte patronen worden in een tabel gezet (3*256 = 768 bytes)
 •   Bepaal opnieuw de conrolbyte. deze wordt weer als eerste byte van het bestand geschreven, gevolgd door de 768 bytes van de tabel.
 •   De controlbyte wordt gebruikt als escape, gevolgd door een index in de tabel (1 byte) en de herhaalbyte (1 byte)
@@ -27,39 +27,18 @@ DAARNA:
 RLE decode doet dus het omgekeerde.
 */
 
+
+/* NU RLE2 */
+// RlE2 is de nieuwe variant, waarbij we 2 bits gebruiken voor het type en 6 bits voor de lengte.    
 string infile = args[0];
 string midfile = Path.ChangeExtension(infile, ".RL8");  // gepko's RLE encoded bestand
-string outfile = Path.ChangeExtension(infile, ".RP8");  // gepko's RLE + pattern encoded bestand
 File.Delete(midfile);
-File.Delete(outfile);
 
 var inhandle = File.OpenRead(infile);
-var midhandle = File.OpenWrite(midfile);
+var outhandle = File.OpenWrite(midfile);
 
-byte controlByte = RLE.FindControlByte(inhandle);
-inhandle.Position = 0;
-
-// basis en '2' geimplementeerd.
-RLE.Encode(inhandle, midhandle, controlByte, true);
+RLE2.Encode(inhandle, outhandle, true);
 
 inhandle.Close();
-midhandle.Flush();
-midhandle.Close();
-
-
-// nu de 256 meest voorkomende 3-byte patronen bepalen en vervangen enzo.
-midhandle = File.OpenRead(midfile);
-var patterns = Pattern.getPatterns(midhandle);
-midhandle.Position = 0;
-byte controlByte2 = RLE.FindControlByte(midhandle);
-midhandle.Position = 0;
-
-var outhandle = File.OpenWrite(outfile);
-outhandle.WriteByte(controlByte2);
-Pattern.writePatterns(outhandle, patterns);
-Pattern.Encode(midhandle, outhandle, controlByte2, patterns);
-
-
 outhandle.Flush();
 outhandle.Close();
-midhandle.Close();
