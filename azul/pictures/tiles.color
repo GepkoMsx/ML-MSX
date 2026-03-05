@@ -1,0 +1,18 @@
+PaletteData:
+    ; PaletteData: R G B(0 - 7)
+    db $76, $06 ; Color 0
+    db $02, $01 ; Color 1
+    db $74, $04 ; Color 2
+    db $47, $06 ; Color 3
+    db $05, $04 ; Color 4
+    db $41, $02 ; Color 5
+    db $71, $01 ; Color 6
+    db $71, $05 ; Color 7
+    db $55, $05 ; Color 8
+    db $00, $00 ; Color 9
+    db $26, $06 ; Color 10
+    db $63, $05 ; Color 11
+    db $74, $07 ; Color 12
+    db $77, $07 ; Color 13
+    db $33, $03 ; Color 14
+    db $27, $02 ; Color 15
