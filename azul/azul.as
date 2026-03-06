@@ -15,24 +15,22 @@ ain:
     ld bc, $0101             ; Swap picture index 1 in memory $4000
     call MEMRESET
     
-    CALL Azul1Load           ; Loads the wait-screen
+   ; CALL Azul1Load           ; Loads the wait-screen
     
     EI
     ret
     
-    include "azul1load.asc"
+    ;include "azul1load.asc"
     
 ; ==[ Program: AZUL2PressSpace ]================================
     org $8050
     
 Main2:                       ; TODO: Maybe choose between 1 or 2 player game?
     DI
-    CALL Azul2PressSpace     ; shows blinking message and waits for space
+    ;CALL Azul2PressSpace     ; shows blinking message and waits for space
     jp Main3
     
-    include "azul2PressSpace.asc"
-    
-; ==[ Program: AZUL3PressSPace ]================================
+   ;include "azul2PressSpace.asc"
     
 Main3:
     ; show the playfield
@@ -40,12 +38,15 @@ Main3:
     call MEMRESET
     CALL Azul3Playfield      ; Draws the playfield
     CALL Azul4EnterName      ; Ask players to enter the name + enterlogic.
+    CALL Azul5StartGame
     jp theend
     
     include "azul3Playfield.asc"
     include "azul4EnterName.asc"
-    
+    include "Azul5StartGame.asc"
+
 theend:
+
     ld DE, 50
     CALL Wait                ; Wait <DE> * 0.1 secs.
     

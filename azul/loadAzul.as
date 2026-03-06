@@ -22,7 +22,7 @@ NROFILES: equ 5              ; Nr of files
 
 EXIT:
 	; Exit the program and return to MSX-DOS
-	include "ReturnToDos.as"
+    include "ReturnToDos.as"
 
 ; ==[ libraries ]====================================================
     include "memPack.inc"
