@@ -37,7 +37,7 @@ Main3:
     ld bc, $0201             ; Swap pictures index 2 in memory $4000
     call MEMRESET
     CALL Azul3Playfield      ; Draws the playfield
-    CALL Azul4EnterName      ; Ask players to enter the name + enterlogic.
+   ; CALL Azul4EnterName      ; Ask players to enter the name + enterlogic.
     CALL Azul5StartGame
     jp theend
     
@@ -56,6 +56,7 @@ theend:
     
     ret
     
+    
 ; ==[ libaries ]====================================================
     include "hmmm.asc"
     include "hmmv.asc"
@@ -72,9 +73,13 @@ theend:
     include "SetPalette16.asc"
     include "color0NotTransparent.asc"
     include "wait.asc"
+    include "smallwait.asc"
     include "border.asc"
     include "GetFirstKey.asc"
-    
+
+    include "library/PrintScore.asc"
+    include "library/EnableSprites16.asc"
+    include "SetVramWrite.asc"    
 ; ==[ Data ]====================================================
     
 TIMER:
