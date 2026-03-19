@@ -1,5 +1,4 @@
-;; ==[ AZUL1LOAD ]==================================================
-;;
+
 ;; the first screen tht shows the logo (banner2.RL8)
 ;; autostarted by the loader.
 ;;
@@ -7,7 +6,18 @@
 ;; its too big, so we got RLE encoded picture
     
 ; Loads the wait-screen
-Azul1Load:
+
+; ==[ Constants ]===============================================
+    include "Constants.as"
+
+    org $8000
+    
+; ==[ Program ]======================================
+Main:
+    DI
+    ld bc, $0101             ; Swap picture index 1 in memory $4000
+    call MEMRESET
+    
     ld HL, Screen8_Table     ; SCREEN 8
     call screen              ; starts disabled.
     
@@ -27,8 +37,18 @@ Azul1Load:
     out ($99), a
     ld a, $81                ; Schrijf naar Register #1
     out ($99), a
-    
+   
+    EI
     ret
+
+; ==[ libaries ]====================================================
+    include "screen.asc"
+    include "RLESendVDP.asc"
+    include "border.asc"
+    include "hmmv.asc"
+    include "waitvdp.asc"
+    include "HMMCNoData.asc"
+
 ; ==[ Data ]====================================================
     
 BLACKSCREEN:

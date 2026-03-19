@@ -109,4 +109,4 @@ SpriteColors:                ; repeat all 16x
     db $29, $6A              ; black
     db $2D, $6A              ; white
     db $21, $63, $6D         ; 1st player
-    db $2F                   ; selector
+    db $2F                   ; selector (+13)

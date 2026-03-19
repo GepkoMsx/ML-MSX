@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-using System.Reflection.Metadata;
 using System.Runtime.Versioning;
-using System.Text.RegularExpressions;
 
 internal class Program
 {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MidiConvert": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\MSX\\code\\azul\\music\\jazz\\K-M\\laura_jh.mid"
+    }
+  }
+}
