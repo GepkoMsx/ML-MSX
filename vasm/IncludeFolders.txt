@@ -1,0 +1,7 @@
+d:\msx\code\_libraries
+d:\msx\code\_libraries\Disk
+d:\msx\code\_libraries\Memory
+d:\msx\code\_libraries\VDP
+d:\msx\code\_libraries\Keyboard
+d:\msx\code\_libraries\Misc
+d:\msx\code\_libraries\Sprite

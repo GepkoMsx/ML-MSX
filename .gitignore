@@ -1,7 +1,8 @@
 **/*.sym
+**/*.o
 .vscode
 **/obj
 **/bin
+!**/vasm/bin/
 **/.vs
-vasm
 **/azul/music
