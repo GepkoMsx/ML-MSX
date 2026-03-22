@@ -15,14 +15,18 @@ function formatLineText(originalText) {
     }
 
     const parts = originalText.split(';');
-    const codePart = parts[0].trim();
+    const codePart = parts[0].trimEnd().replace("\t", "    ");
     const commentPart = parts.slice(1).join(';').trim();
-    let tab = "    ";
-    if (codePart.includes(":") || codePart.includes(" equ ")) {
+    let tab = "";
+    if (!codePart.startsWith("    ")) {
+        tab = "    ";
+
+    }
+    if (codePart.includes(":")) {
         tab = "";
     }
 
-    const paddingCount = 29 - codePart.length - tab.length;
+    const paddingCount = 35 - codePart.length - tab.length;
     const padding = " ".repeat(Math.max(1, paddingCount));
 
     if (parts.length == 1) {
@@ -106,7 +110,7 @@ function activate(context) {
             const workspaceEdit = new vscode.WorkspaceEdit();
             const lineStart = new vscode.Position(position.line, 0);
 
-            if (filePath.endsWith('.as')) {
+            if (filePath.endsWith('.as') || filePath.endsWith('.asm')) {
                 workspaceEdit.insert(document.uri, lineStart, `\t${comment}\r\n\tinclude "${relativePath}"\r\n`);
             }
             if (filePath.endsWith('.asc')) {

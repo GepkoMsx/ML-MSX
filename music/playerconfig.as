@@ -13,27 +13,26 @@
 
 ; If you use one player but several songs, don't worry, these declarations will stack up.
 ; Just make sure to include them, in any order, BEFORE the player.
-PLY_AKG_HARDWARE_MSX = 1
+PLY_AKG_HARDWARE_MSX equ 1
+PLY_CFG_ConfigurationIsPresent equ 1
 
 ; DKW
-PLY_CFG_ConfigurationIsPresent = 1
-PLY_CFG_UseEffects = 1
-PLY_CFG_UseSpeedTracks = 1
-PLY_CFG_NoSoftNoHard = 1
-PLY_CFG_NoSoftNoHard_Noise = 1
-PLY_CFG_SoftOnly = 1
-PLY_CFG_UseEffect_SetVolume = 1
-
+PLY_CFG_UseEffects equ 1
+PLY_CFG_UseSpeedTracks equ 1
+PLY_CFG_NoSoftNoHard equ 1
+PLY_CFG_NoSoftNoHard_Noise equ 1
+PLY_CFG_SoftOnly equ 1
+PLY_CFG_UseEffect_SetVolume equ 1
 
 ; AG
-;PLY_CFG_ConfigurationIsPresent = 1
-;PLY_CFG_UseEffects = 1
-PLY_CFG_UseHardwareSounds = 1
-;PLY_CFG_NoSoftNoHard = 1
-;PLY_CFG_SoftOnly = 1
-PLY_CFG_SoftOnly_ForcedSoftwarePeriod = 1
-PLY_CFG_SoftOnly_SoftwarePitch = 1
-PLY_CFG_SoftOnly_SoftwareArpeggio = 1
-PLY_CFG_SoftToHard = 1
-;PLY_CFG_UseEffect_SetVolume = 1
+;PLY_CFG_UseEffects equ 1
+;PLY_CFG_NoSoftNoHard equ 1
+;PLY_CFG_SoftOnly equ 1
+;PLY_CFG_UseEffect_SetVolume equ 1
+
+; PLY_CFG_UseHardwareSounds equ 1
+; PLY_CFG_SoftOnly_ForcedSoftwarePeriod equ 1
+; PLY_CFG_SoftOnly_SoftwarePitch equ 1
+; PLY_CFG_SoftOnly_SoftwareArpeggio equ 1
+; PLY_CFG_SoftToHard equ 1
     

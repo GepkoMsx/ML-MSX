@@ -1,3 +1,8 @@
+; .asm to not interfere with formatting of .as files.
+; File Changed to make it compile with VASM
+; Broke the ROM variant (i think)
+
+
 ;       Arkos Tracker 3 player "generic" player.
 ;       By Targhan/Arkos.
 ;       Psg optimization trick on CPC by Madram/Overlanders.

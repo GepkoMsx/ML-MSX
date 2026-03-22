@@ -1,7 +1,18 @@
-plugin to add includes into your main program
-works on ".asc" and ".as" files
+# MSX Assembly plugin
+This extension adds support for MSX Z80 Assembly to Visual Studio Code.
 
-generates for .as files:
+## Features
+
+Symbols for BIOS entry & WORK AREA are supported.  
+drag-drop files add include/call statements.   
+basic formatting while you type.
+
+## Release Notes
+
+plugin to add includes into your main program
+works on ".asc", ".asm" and ".as" files
+
+generates for .as and .asm files:
 
      ; comment line
      include "<relpath/FileName.ext>"
@@ -17,13 +28,3 @@ generates for .inc files:
 relpath is omitted for files and folders in "_libraries"  folder.
 comment lines are copied from the file based on the LABEL. 
 label matches filename (dosomething.asc -> Dosomething:)
-
-It also formats the document:
-- labels start of line
-- other text start column 4
-- comments at column 30
-- comment-line, start of line
-- text to long? comments shift right.
-It formats on open, enter and keyboard/mouse movement
-
-install by copy/past this folder to %USERPROFILE%\.vscode\extensions

@@ -1,19 +1,80 @@
 {
-  "name": "asembly-include",
-  "publisher": "GepkoSterringa",
-  "version": "1.0.0",
-  "engines": { "vscode": "^1.70.0" },
-  "main": "./extension.js",
-  "activationEvents": [
-    "onLanguage:z80",
-    "onStartupFinished"
-  ],
-  "contributes": {
-    "languages": [
-      {
-        "id": "z80",
-        "extensions": [".as", ".asc", ".inc"]
-      }
-    ]
-  }
+	"name": "assembly-include",
+	"publisher": "GepkoSterringa",
+	"version": "1.0.0",
+	"engines": { "vscode": "^1.70.0" },
+	"main": "./extension.js",
+	"activationEvents": [
+		"onLanguage:z80",
+		"onStartupFinished"
+	],
+	"displayName": "Assembly Include MSX",
+	"description": "Assembly Include MSX",
+	"icon": "icon.png",
+	"categories": [
+		"Programming Languages", 
+		"Formatters"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "z80",
+				"aliases": [
+					"MSX Z80 Assembly",
+					"z80"
+				],
+				"extensions": [
+					".asc",
+					".asm",
+					".inc",
+					".as"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "z80",
+				"scopeName": "source.asm.z80",
+				"path": "./syntaxes/asm-msx.tmLanguage"
+			}
+		],
+		"configurationDefaults": {
+        "editor.tokenColorCustomizations": {
+            "textMateRules": [
+                {
+                    "scope": "punctuation.whitespace.asm",
+                    "settings": {
+                        "foreground": "#777"
+                    }
+                },
+                {
+                    "scope": "string.quoted.single.include.asm.z80",
+                    "settings": {
+                        "foreground": "#E76"
+                    }
+                },
+                {
+                    "scope": "constant.numeric.hex",
+                    "settings": {
+                        "foreground": "#D7CA7D"
+                    }
+                },
+                {
+                    "scope": "constant.numeric.binary",
+                    "settings": {
+                        "foreground": "#AAA"
+                    }
+                }
+            ]
+        }
+    }
+	},
+	"author": "Yeongman Seo <sharksym@hitel.net>",
+	"license": "MIT",
+	"__metadata": {
+		"installedTimestamp": 1769620908865,
+		"targetPlatform": "undefined",
+		"size": 24579
+	}
 }
