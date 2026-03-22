@@ -1,0 +1,35 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Assemble MSX File",
+            "type": "shell",
+            "command": "d:\\msx\\code\\vasm\\compile.cmd",
+            "args": [
+                "${fileBasename}",
+                "${fileDirname}"
+            ],
+             "group": {
+                "kind": "build",
+                "isDefault": "**/*.as" 
+            },
+            "problemMatcher": {
+    "owner": "vasm",
+    "fileLocation": "absolute",
+    "pattern": {
+        "regexp": "^(error)\\s+\\d+\\s+in\\s+line\\s+(\\d+)\\s+of\\s+\"(.+?)\":\\s+(.*)$",
+        "severity": 1,
+        "line": 2,
+        "file": 3,
+        "message": 0
+    }
+},
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}
