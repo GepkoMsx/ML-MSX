@@ -5,3 +5,5 @@
 !**/vasm/bin/
 **/.vs
 **/azul/music
+**/launchsettings.json
+**/link.cmd

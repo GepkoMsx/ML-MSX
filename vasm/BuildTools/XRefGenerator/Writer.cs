@@ -34,11 +34,7 @@ public static class Writer
         var opath = Path.Combine(Path.GetDirectoryName(path)??"", Path.GetFileNameWithoutExtension(path) + ".o");
         handle.Write($"bin\\vlink.exe -b rawbin -Ttext {address} -o {binpath} {opath} ");
 
-        oFiles.ToList().ForEach(o =>
-        {
-            handle.Write(string.Join(" ", o));
-        });
-        handle.WriteLine();
+        handle.WriteLine(string.Join(' ', oFiles));
 
         handle.Close();
     }

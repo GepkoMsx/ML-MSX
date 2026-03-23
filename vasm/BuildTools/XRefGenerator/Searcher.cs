@@ -5,8 +5,47 @@ namespace XRefGenerator;
 
 static class Searcher
 {
+    public static string FindStartAddress(string path)
+    {
+        var lines = File.ReadAllLines(path);
+        // we are searching for a comment line that starts with a comment (;) and contains  .org followed by an address
+
+        var addressinfile = lines.Where(line => line.StartsWith(';'))
+            .Where(line => line.Contains(".org ", StringComparison.OrdinalIgnoreCase))
+            .Select(line => line.ToLower().Split(".org")[1].Trim())
+            .Select(line => line.Split(' ')[0].Trim())
+            .FirstOrDefault();
+
+        if (!string.IsNullOrWhiteSpace(addressinfile))
+        {
+            return addressinfile;
+        }
+
+        return "0x0100";  // if we can't find an .org directive, we return a default start address of msxdos
+    }
+
+    public static IEnumerable<string> GetAllOFiles(IEnumerable<string> allfiles, Dictionary<string, string> ofileLabels)
+    {
+        List<string> allOFiles = [];
+        foreach (var sourcefile in allfiles)
+        {
+            var declaredLabels = Searcher.FindDeclaredLabels(sourcefile);
+            var usedLabels = Searcher.FindUsedLabels(sourcefile).Distinct();
+            var usedNotDeclared = usedLabels.Where(l => !declaredLabels.Contains(l)).Distinct().ToList();
+
+            // find all .o files that contain the cross-references
+            var ofiles = Searcher.FindOfiles(usedNotDeclared, ofileLabels);
+            // search all .o files for the cross-references
+            allOFiles.AddRange(ofiles);
+            // now do this recursively for the .o files we found, to find more cross-references
+
+        }
+        return allOFiles;
+    }
+
+
     // find all included files (recursively) and add them to the list of files to process
-    public static IEnumerable<string> FindIncludes(string path, string[] includeFolders)
+    public static IEnumerable<string> FindIncludes(string path, IEnumerable<string> includeFolders)
     {
         List<string> includes = [];
         // read the file line by line, if we find an include directive, we add the included file to the list of includes
@@ -81,40 +120,49 @@ static class Searcher
         return usedLabels;
     }
 
-    // find all .o files that contain the cross-references, update usedNotDeclared by removing missing cross-references
-    public static IEnumerable<string> FindOfiles(List<string> usedNotDeclared, string[] includeFolders)
+    public static Dictionary<string, string> MakeGlobalList(IEnumerable<string> includeFolders)
     {
         var allOfiles = includeFolders.SelectMany(folder => Directory.GetFiles(folder, "*.o", SearchOption.AllDirectories)).ToList();
-        Dictionary<string, List<string>> ofileLabels = new Dictionary<string, List<string>>();
+        Dictionary<string, string> ofileLabels = [];  // label,file
         foreach (var ofile in allOfiles)
         {
-            var sourceFile = Directory.GetFiles(Path.GetDirectoryName(ofile) ?? "", "*.as?", SearchOption.AllDirectories).FirstOrDefault();
-            if (sourceFile != null) {
-                var labels = FindDeclaredLabels(sourceFile).ToList();
-
-                // add variables aswell, so we can find cross-references to variables created with .set, .equ, .equiv or .assign
+            var sourceFile = Directory.GetFiles(Path.GetDirectoryName(ofile) ?? "", Path.GetFileNameWithoutExtension(ofile) + ".as?", SearchOption.AllDirectories).FirstOrDefault();
+            if (sourceFile != null)
+            {
+                // find all .global labels in the source file, as these are the only labels that can be referenced from other files (and thus can be cross-references)
                 var lines = File.ReadAllLines(sourceFile);
-                foreach (var line in lines) {
-                    var createdVar = GetCreatedVariable(line);
-                    if (createdVar != null) {
-                        labels.Add(createdVar);
+
+                foreach (var line in lines)
+                {
+                    if (line.Contains(".global ") || line.Contains(".GLOBAL "))
+                    {
+                        var afterGlobal = line.Split([".global ", ".GLOBAL "], StringSplitOptions.None)[1].Trim();
+                        var afterGlobalLabels = afterGlobal.Split(',');
+                        foreach (var label in afterGlobalLabels)
+                        {
+                            var l = label.Trim();
+                            if (l.Length > 0 && !ofileLabels.ContainsKey(l))
+                            {
+                                ofileLabels.Add(l, ofile);
+                            }
+                        }
                     }
                 }
-                ofileLabels[ofile] = labels;
             }
         }
 
+        return ofileLabels;
+    }
 
+    // find all .o files that contain the cross-references, update usedNotDeclared by removing missing cross-references
+    public static IEnumerable<string> FindOfiles(List<string> usedNotDeclared, Dictionary<string, string> ofileLabels)
+    {
         List<string> ofiles = [];
         foreach (var label in usedNotDeclared)
         {
-            foreach (var kvp in ofileLabels)
+            if (ofileLabels.ContainsKey(label))
             {
-                if (kvp.Value.Contains(label))
-                {
-                    ofiles.Add(kvp.Key);
-                    break;
-                }
+                ofiles.Add(ofileLabels[label]);
             }
         }
 

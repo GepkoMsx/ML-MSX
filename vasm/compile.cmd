@@ -17,7 +17,7 @@ echo %INC%
 echo.
 
 REM RUN XREF generator
-D:\MSX\code\vasm\BuildTools\XRefGenerator\bin\Release\net9.0\XRefGenerator.exe %2\%1 d:\msx\code\vasm 0x0100
+D:\MSX\code\vasm\BuildTools\XRefGenerator\bin\Release\net9.0\XRefGenerator.exe %2\%1 d:\msx\code\vasm
 
 REM BUILD
 cd d:\msx\code\vasm\bin
