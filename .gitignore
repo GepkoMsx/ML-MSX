@@ -6,4 +6,4 @@
 **/.vs
 **/azul/music
 **/launchsettings.json
-**/link.cmd
+vasm/link.cmd
