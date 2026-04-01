@@ -50,8 +50,9 @@ static class Searcher
         List<string> includes = [];
         // read the file line by line, if we find an include directive, we add the included file to the list of includes
         var lines = File.ReadAllLines(path);
-        foreach (var line in lines)
+        foreach (var lineWcomment in lines)
         {
+            var line = lineWcomment.Split(';')[0]; // remove comments
             if (line.Contains(".include ") || line.Contains(".INCLUDE "))
             {
                 // extract the included file name

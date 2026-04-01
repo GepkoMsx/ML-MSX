@@ -4,7 +4,6 @@ echo.
 setlocal enabledelayedexpansion
 for /F "delims=#" %%E in ('"prompt #$E# & for %%E in (1) do rem"') do set "ESC=%%E"
 
-
 REM read the include folders from the file and build the INC variable
 cd D:\MSX\code\vasm
 set INC=
@@ -15,6 +14,14 @@ for /f "usebackq delims=" %%a in ("IncludeFolders.txt") do (
 echo The generated Includes:
 echo %INC%
 echo.
+
+REM Generate the macro include file
+del D:\MSX\code\_libraries\Macros.asc
+set "TAB=	"
+for /f "delims=" %%i in ('dir D:\MSX\code\_libraries\*.asm /s /b') do (
+    echo %TAB%.include "%%~nxi" >> "D:\MSX\code\_libraries\Macros.asc"
+)
+
 
 REM RUN XREF generator
 D:\MSX\code\vasm\BuildTools\XRefGenerator\bin\Release\net9.0\XRefGenerator.exe %2\%1 d:\msx\code\vasm
@@ -46,6 +53,7 @@ if /I "%~x1" == ".as" (
     ) 
 
     REM LINK  (file, folder, startaddress)
+    echo Running vlink.exe
     cd d:\msx\code\vasm
     call link.cmd
 

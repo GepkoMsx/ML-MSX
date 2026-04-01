@@ -1,7 +1,17 @@
 const vscode = require('vscode');
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
 
+
+const debugChannel = vscode.window.createOutputChannel("Mijn ASM Debugger");
+debugChannel.appendLine("Started");
+let z80_regex = "";
+
+// 1. Definieer de stijl (pas de kleuren aan naar smaak)
+const keywordDecoration = vscode.window.createTextEditorDecorationType({
+    color: '#9CDCFE', // Oranje voor je MSX/ASM tokens
+    fontWeight: 'normal'
+});
 
 
 function formatLineText(originalText) {
@@ -11,7 +21,7 @@ function formatLineText(originalText) {
 
     if (originalText.trim().startsWith(';')) {
         // only comment.
-        return originalText; 
+        return originalText;
     }
 
     const parts = originalText.split(';');
@@ -32,7 +42,7 @@ function formatLineText(originalText) {
     if (parts.length == 1) {
         // no comment
         return `${tab}${codePart}`;
-    } 
+    }
 
     // code + comment
     return `${tab}${codePart}${padding}; ${commentPart}`;
@@ -62,7 +72,7 @@ class OnEnterFormatter {
             const newText = formatLineText(originalText);
 
             if (newText !== originalText) {
-               edits.push(vscode.TextEdit.replace(lastLine.range, newText));
+                edits.push(vscode.TextEdit.replace(lastLine.range, newText));
             }
         }
 
@@ -71,6 +81,9 @@ class OnEnterFormatter {
 }
 
 function activate(context) {
+
+    PrepareDecoration();
+
     const dropEditProvider = {
         async provideDocumentDropEdits(document, position, dataTransfer, token) {
             const item = dataTransfer.get('text/uri-list');
@@ -150,7 +163,7 @@ function activate(context) {
                     }
                 }
                 lastLineIndex = currentLineIndex;
-            } catch (err) { 
+            } catch (err) {
                 console.error("formatting error:", err);
             }
         })
@@ -160,6 +173,7 @@ function activate(context) {
         vscode.workspace.onDidOpenTextDocument(doc => {
             if (doc.languageId === 'z80') {
                 formatWholeDocument(doc);
+                updateDecorations();
             }
         })
     );
@@ -170,6 +184,73 @@ function activate(context) {
     context.subscriptions.push(
         vscode.languages.registerOnTypeFormattingEditProvider(selector, new OnEnterFormatter(), '\n')
     );
+
+
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor(editor => {
+            activeEditor = editor;
+            if (editor) updateDecorations();
+        }, null, context.subscriptions));
+
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeTextDocument(event => {
+            if (activeEditor && event.document === activeEditor.document) {
+                updateDecorations();
+            }
+        }, null, context.subscriptions));
+
 }
+
+
+function PrepareDecoration() {
+    debugChannel.appendLine("--- Start prepareDecorations ---");
+
+    // 2. Pad naar je externe bestand (bijv. in de huidige workspace)
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+    if (!workspaceFolder) return;
+    const listPath = 'D:\\MSX\\code\\_libraries\\Macros.asc';
+
+    if (!fs.existsSync(listPath)) return;
+
+    // 3. Lees woorden en maak Regex
+    const content = fs.readFileSync(listPath, 'utf8');
+    const matches = content.match(/"([^"]+)"/g); // Zoekt alles tussen " "
+    if (!matches) return;
+
+    const cleanWords = matches.map(m => {
+        let word = m.replace(/"/g, ''); // Verwijder de quotes
+        return word.replace(/\.[^/.]+$/, ""); // Verwijder de extensie (alles na de laatste punt)
+        // "vdp.asm" wordt nu "vdp"
+    });
+
+    // Maak de woorden veilig voor de zoekmachine (escape speciale tekens)
+    const escapedWords = cleanWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    z80_regex = new RegExp(`\\b(${escapedWords.join('|')})\\b`, 'g');
+
+}
+
+function updateDecorations() {
+
+
+    if (!activeEditor || activeEditor.document.languageId !== 'z80') return;
+
+    const text = activeEditor.document.getText();
+    const decorations = [];
+    let match;
+
+    while ((match = z80_regex.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index);
+        const endPos = activeEditor.document.positionAt(match.index + match[0].length);
+        decorations.push({ range: new vscode.Range(startPos, endPos), hoverMessage: 'Macro' });
+    }
+
+    debugChannel.appendLine("decorations:");
+    decorations.forEach(element => {
+        debugChannel.appendLine(element);
+    });
+
+    activeEditor.setDecorations(keywordDecoration, decorations);
+};
+
 
 exports.activate = activate;

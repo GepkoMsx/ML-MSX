@@ -31,9 +31,13 @@ public static class Writer
         var handle = File.CreateText(Path.Combine(outputFolder, "link.cmd"));
 
         var binpath = Path.GetFileNameWithoutExtension(path) + ".bin";
-        var opath = Path.Combine(Path.GetDirectoryName(path)??"", Path.GetFileNameWithoutExtension(path) + ".o");
-        handle.Write($"bin\\vlink.exe -b rawbin -Ttext {address} -o {binpath} {opath} ");
+        handle.Write($"bin\\vlink.exe -Msymbols.sym -b rawbin -Ttext {address} -o {binpath} ");
 
+        // make sure the .o file for the main file is included as first one in the list of .o files to link
+        var opath = Path.Combine(Path.GetDirectoryName(path) ?? "", Path.GetFileNameWithoutExtension(path) + ".o");
+        handle.Write(opath + " ");
+
+        oFiles = oFiles.Where(ofile => ofile != opath).ToList();
         handle.WriteLine(string.Join(' ', oFiles));
 
         handle.Close();
