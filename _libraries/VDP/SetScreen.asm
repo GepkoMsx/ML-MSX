@@ -1,14 +1,3 @@
-
-;; MACRO SetVDP
-;; Sets a VDP register directly.  
-;;  SetVDP 1, 0x28
-;; 
-    .macro SetVDP reg val
-     ld a, \val
-     out  (0x99), a
-     ld a, \reg + 0x80       ; write
-    .endm
-
 ;; MACRO SetScreen
 ;; Switch to the right screen mode with VDP
 ;;  SetScreen 5, off

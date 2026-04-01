@@ -1,16 +1,13 @@
-; ==[ Constants ]===============================================
-    include "Constants.as"
-    
-    org $4000
+; .org 0x4000                      ; tell the linker to use this startadres (must be comment)
 
-; ==[ Program ]=================================================
-Main:
-    ld de, helloDeventer     ; Adres van de string (moet eindigen met '$')
-    ld c, $09                ; Functie: Print String
+    .section .text
+
+    ld de, helloDeventer           ; Adres van de string (moet eindigen met '$')
+    ld c, 0x09                     ; Functie: Print String
     call 5
     ret
 
-helloDeventer:
-    db "Hello deventer!", 13,10,"$"
+    .section .data
 
-FileEnd:
+helloDeventer:
+    .byte "Hello deventer!", 13,10,"$"

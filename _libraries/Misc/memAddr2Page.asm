@@ -1,4 +1,4 @@
-;; ==[ CALL MemAddr2Page ]===============================================
+;; ==[ MACRO MemAddr2Page ]===============================================
 ;; Mapt het address naar de juiste OUT port.
 ;;
 ;; INPUT:
@@ -14,13 +14,14 @@
 ;; #80 - #BF	1	    0	    Page 2	    $8000 - $BFFF
 ;; #C0 - #FF	1	    1	    Page 3	    $C000 - $FFFF
     
-MemAddr2Page:
+    .macro MemAddr2Page
     ld a, h
     rlca                           ; Verschuif bit 7 naar carry
     rlca                           ; Verschuif bit 6 naar carry, bit 7 naar positie 0
     and 3                          ; Houd alleen de onderste twee bits over (0, 1, 2 of 3)
     
-    add a, $FC                     ; converteer naar het IO addres voor OUT.
+    add a, 0xFC                    ; converteer naar het IO addres voor OUT.
     ld c, a
-    ret
+
+    .endm
     

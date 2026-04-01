@@ -5,10 +5,13 @@
 ;; A - the ascii value of the key, or 0 if no key available.
     
 ; Retuns A: ASCII value, or 0 for no key
-GetBiosKey:
-    call CHSNS               ; do we have a key?
+    .macro GetBiosKey
+
+    call CHSNS                     ; do we have a key?
     ld a, 0
-    ret z                    ; no.
+    jr z,  GetBiosKeyEnd\@         ; no.
     
-    call CHGET               ; get key in A (ascii)
-    ret
+    call CHGET                     ; get key in A (ascii)
+GetBiosKeyEnd\@:
+
+    .endm

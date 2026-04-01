@@ -8,21 +8,22 @@
 ;; - A: the above bitmap
     
 ; Returns bitmask in A:  →,↓,↑,←,return,tab,esc,space
-GetActionKeys:
+    .macro GetActionKeys
+
     ld a, 8                        ; scanline 8: has bit 7654XXX0
-    out (0xAA), a                   ; Schrijf rijnummer naar PPI poort C
-    in a, (0xA9)                    ; Lees de 8 toetsen van poort A
+    out (0xAA), a                  ; Schrijf rijnummer naar PPI poort C
+    in a, (0xA9)                   ; Lees de 8 toetsen van poort B
     cpl
-    and 0xF1                        ; remove bit 1,2,3
+    and 0xF1                       ; remove bit 1,2,3
     ld b, a                        ; save in B
     
     ld a, 7                        ; has return, X, X, X, tab, esc, X,X
-    out (0xAA), a                   ; Schrijf rijnummer naar PPI poort C
-    in a, (0xA9)                    ; Lees de 8 toetsen van poort A
+    out (0xAA), a                  ; Schrijf rijnummer naar PPI poort C
+    in a, (0xA9)                   ; Lees de 8 toetsen van poort B
     cpl
     
     ld c, a                        ; save a
-    and 0x80                        ; get return
+    and 0x80                       ; get return
     rrca
     rrca
     rrca
@@ -34,7 +35,8 @@ GetActionKeys:
     rrca                           ; shift bit 2-3 to 1-2
     and 0x06
     or b                           ; combine
-    ret
+    
+    .endm
     
 ; De MSX Toetsenmatrix 
 ; ====================

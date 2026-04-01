@@ -1,18 +1,13 @@
-; ==[ Constants ]===============================================
-    include "Constants.as"
-    
-    org $4000
- ;   include "BloadHeader.as"
-    
-; ==[ Program ]=================================================
-Main:
+; .org 0x4000                      ; tell the linker to use this startadres (must be comment)
 
-    ld de, helloCountry      ; Adres van de string (moet eindigen met '$')
-    ld c, $09                ; Functie: Print String
+    .section .text
+
+    ld de, helloCountry            ; Adres van de string (moet eindigen met '$')
+    ld c, 0x09                     ; Functie: Print String
     call 5
     ret
-    
+
+    .section .data
+
 helloCountry:
-    db "Hello country!", 13,10,"$"
-    
-FileEnd:
+    .byte "Hello country!", 13,10,"$"

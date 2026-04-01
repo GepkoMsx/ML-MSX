@@ -1,0 +1,29 @@
+;; ==[ macro CompareStrings ]===============================================
+;; Vergelijkt twee strings van een opgegeven lengte.
+;; INPUT:
+;; - HL:             Pointer naar eerste string
+;; - DE:             Pointer naar tweede string
+;; - B:              Aantal bytes om te vergelijken
+;;
+;; OUTPUT:
+;; - Z-flag:         1 als strings gelijk zijn, anders Z-flag = 0
+    
+; Compare 2 strings in <HL> with <DE> for first <B> bytes.
+
+.macro CompareStrings
+    push de
+    push hl
+    
+CompStr_loop\@:
+    ld a, (de)
+    cp (hl)                        ; Vergelijk (HL) met Accumulator
+    jr nz, CompStr_end\@             ; Stop direct als ze niet gelijk zijn (Z-vlag = 0)
+    inc hl
+    inc de
+    djnz CompStr_loop\@              ; Verlaag B en spring terug als B > 0
+    
+CompStr_end\@:
+    pop hl
+    pop de                         ; Z-vlag geeft aan of de bytes gelijk zijn (1) of niet (0)
+    
+    .endm

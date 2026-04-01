@@ -7,40 +7,25 @@
 ; page 1 and 2 get a "fresh requested segment"
 ; The includes work under MSX-DOS1 and MSX-DOS2.
 
-; ==[ Constants ]===============================================
+    .section .text
 
-    include "Constants.as"
-
-; ==[ Header ]==================================================
-    org $0100
-
-    include "memHeader.as"
-
-; ==[ Program ]=================================================
-    include "memPrepare.as"
+    call MemPrepare
 
     ; exta tests for now
-    ld BC, $0202             ; index 2 in page 2
+    ld BC, 0x0202                  ; index 2 in page 2
     call MEMSET
-    ld BC, $0301             ; index 3 in page 1
-    call MEMSET              ; 64 kb
+    ld BC, 0x0301                  ; index 3 in page 1
+    call MEMSET                    ; 64 kb
 
-    ld BC, $0402             ; index 4 in page 2
+    ld BC, 0x0402                  ; index 4 in page 2
     call MEMSET
-    ld BC, $0501             ; index 5 in page 1
-    call MEMSET              ; 96 kb (MAX MSX-DOS 1 without extentions)
+    ld BC, 0x0501                  ; index 5 in page 1
+    call MEMSET                    ; 96 kb (MAX MSX-DOS 1 without extentions)
 
-    ld BC, $0001             ; index 0 in page 1
+    ld BC, 0x0001                  ; index 0 in page 1
     call MEMRESET
 
 backtodos:
-    LD C, $00                ; Exit do MSX-DOS
+    LD C, 0x00                     ; Exit do MSX-DOS
     CALL BDOS
     ret
-
-
-; ==[ Libraries ]===============================================
-    include "memPack.inc"
-
-; ==[ Data ]====================================================
-FileEnd:

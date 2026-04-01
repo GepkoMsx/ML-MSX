@@ -2,13 +2,13 @@
 
 
 ;; HL = address. (make sure right 16k vram page is selected)
-SetVramWrite:
+    .macro SetVramWrite
     push af
     ld   a, l
-    out  ($99), a
+    out  (0x99), a
     ld   a, h
-    and  $3F
-    or   $40                 ; Write bit
-    out  ($99), a
+    and  0x3F
+    or   0x40                      ; Write bit
+    out  (0x99), a
     pop  af
-    ret
+    .endm
