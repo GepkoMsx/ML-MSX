@@ -58,7 +58,32 @@ if /I "%~x1" == ".as" (
     call link.cmd
 
     REM Copy to DIRASDISK folder 
-    move /Y d:\msx\code\vasm\%~n1.bin d:\msx\dirasdisk\%~n1.com
+    REM check if the source file has a .org line on 1st row, then its a .bin
+    REM otherwise a .com
+    for /f "usebackq tokens=1* delims=:" %%a in (`findstr /n "^" "%2\%1"`) do (
+        if "%%a"=="1" (
+            set "firstline=%%b"
+            goto :move
+        )
+    )
 )
-REM done
+echo %ESC%[32mNo move for %1%ESC%[0m
+goto :done
+
+:move
+    echo %2\%1
+    echo first: %firstline%
+
+    echo %firstline% | findstr /i ".org" >nul
+    if %errorlevel% equ 0 (
+        echo %ESC%[32mMoving %~n1.bin%ESC%[0m
+        move /Y d:\msx\code\vasm\%~n1.bin d:\msx\dirasdisk\%~n1.bin
+    ) else (
+        echo %ESC%[32mMoving %~n1.com%ESC%[0m
+        move /Y d:\msx\code\vasm\%~n1.bin d:\msx\dirasdisk\%~n1.com
+    )
+
+
+
+:done
 cd d:\msx\code\vasm
