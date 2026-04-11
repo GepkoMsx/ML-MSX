@@ -46,7 +46,7 @@
 
     in a, (VDPC)                   ; even status check om vdp te schonen
 
-    setVDP startreg, 17            ; auto-increment (geen $80) vanaf register 32/36 naar R17
+    setVDP 17, startreg            ; auto-increment (geen $80) vanaf register 32/36 naar R17
     
     ld b, nrbytes
     ld c, VDPR
@@ -55,7 +55,7 @@
     out (c), a
 
     .ifnb \bytesColor              ; we got colordata aswell, so send it (for HMMC and LMMC)
-      setVDP 44, 17                ; geen increment ($80) naar register 44
+      setVDP 17, 44                ; geen increment ($80) naar register 44
       ld HL, \ptrColor
       ld DE, \bytesColor           ; remove 1, has been sent in cmd
       dec de

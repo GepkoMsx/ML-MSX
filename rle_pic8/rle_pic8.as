@@ -13,27 +13,24 @@
     .list
 
     di
-    call MemPrepare
     ld BC, 0x0201                  ; B = segmentindex, C =  Page (Seg 2 on 4000)
     CALL MEMRESET                  ; Works cause loader still in page 0
 
-    SetScreen 8
-    call Waitvdp
+    SetScreen 8, on
+    SetVDP 2, 0x1F                 ; Set the table base registers
+    SetVDP 5, 0xEF
+    SetVDP 6, 0x03
 
-    ld a, 0                        ; set Border: Kleurnummer (0-15)
-    out (0x99), a                  ; Stuur waarde naar poort 0x99
-    ld a, 0x87                     ; 128 (Register schrijven) + 7 (Registernummer)
-    out (0x99), a
-    call Waitvdp
-
+    SetVDP 7, 0                    ; Set Border: color 0, register 7
 
     VdpCopy VDP_HMMV, BLACKSCREEN
     call Waitvdp
+    
 
     VdpCopy VDP_HMMC, HMMCDATA
-    setVDP 17, 0x80+44             ; geen increment ($80) naar register 44
+    SetVDP 17, 0x80+44             ; geen increment ($80) naar register 44
     ld HL, 0x4000                  ; NOW THE RLE TRICK
-    ld DE, 254*177                 ; bytes to send (1st is controlbyte)
+   ; ld DE, 254*177                 ; bytes to send (1st is controlbyte)
     call RLESendVDP
     
 theend:
@@ -48,7 +45,7 @@ theend:
     .section .data
 
 HMMCDATA:
-    .word 0, 0, 254, 177           ; dx, dy, mx, my
+    .word 6, 0, 244, 166           ; dx, dy, mx, my
     .byte 0, 0                     ; col, arg
 
 BLACKSCREEN:
