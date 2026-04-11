@@ -2,40 +2,25 @@
 ; We want to be compatible with "vanilla MSX2"
 ; But also work on extentions liks harddisks, SD cards etc
 
-; ==[ Constants ]===============================================
-    include "Constants.as"
+    .section .text
+    .global NROFILES
 
-NROFILES: equ 3              ; Aantal bestanden die geladen moeten worden.
-
-; ==[ Header ]==================================================
-    org $0100                ; MSX-DOS has no header, and starts at $0100
-
-    include "memHeader.as"
-
-; ==[ Program ]=================================================
-    include "memPrepare.as"
-
+    .equ NROFILES, 3               ; Aantal bestanden die geladen moeten worden.
+    
+    call MemPrepare
     call DosLoader
+    call ReturnToDos
 
-EXIT:
-    LD C, $00                ; Exit do MSXDOS
-    CALL BDOS
-    ret
+    .section .data
+    .global FILENAME
 
-; ==[ libraries ]====================================================
-    include "memPack.inc"
-    include "dosloader.asc"
+FILENAME:                          ; vergeet NROFILES niet bij te werken als je hier iets aanpast!
+    .byte "PSG_LUT BIN"            ; 0-10  filename, 11 bytes (8+3)
+    .word 0x8000                   ; 11-12 address to load in memory (4000-C000 range!)
+    .byte 0x00                     ; 13    segment index. (add 0x80 to add on exisiting segment, instead of a new segment)
+    .byte 0x00                     ; 14    1 = run it 0 = dont run  (runners should RET, to load the next file)
 
-; ==[ Data ]====================================================
-
-FILENAME:                    ; vergeet NROFILES niet bij te werken als je hier iets aanpast!
-;HELLO example
-    db "PSG_LUT BIN"         ; 0-10  filename, 11 bytes (8+3)
-    dw $8000                 ; 11-12 address to load in memory (4000-C000 range!)
-    db $00                   ; 13    segment index. (add $80 to add on exisiting segment, instead of a new segment)
-    db $00                   ; 14    1 = run it 0 = dont run  (runners should RET, to load the next file)
-
-    db "GAMEOVERBIN", $00, $40, $01, $00
-    db "SOUND   BIN", $00, $82, $80, $01
+    .byte "GAMEOVERSND", 0x00, 0x40, 0x01, 0x00
+    .byte "SOUND   BIN", 0x00, 0x82, 0x80, 0x01
 
 FileEnd:
