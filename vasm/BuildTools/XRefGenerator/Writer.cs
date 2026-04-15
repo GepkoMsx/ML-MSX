@@ -40,6 +40,9 @@ public static class Writer
         oFiles = oFiles.Where(ofile => ofile != opath).ToList();
         handle.WriteLine(string.Join(' ', oFiles));
 
+        // call the vlinksymtovasm
+        handle.WriteLine($"D:\\MSX\\code\\vasm\\BuildTools\\VlinkSymToVasm\\bin\\Release\\net9.0\\vlinksymtovasm.exe D:\\MSX\\code\\vasm\\symbols.sym");
+
         handle.Close();
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymParser", "SymParser\SymP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XRefGenerator", "XRefGenerator\XRefGenerator.csproj", "{798D65E5-A857-43B6-9B18-CFF35D032ED6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VlinkSymToVasm", "VlinkSymToVasm\VlinkSymToVasm.csproj", "{E03FFC24-0266-46B3-AA26-FC43640BA900}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
