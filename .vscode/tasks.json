@@ -7,29 +7,29 @@
             "label": "Assemble MSX File",
             "type": "shell",
             //"command": "d:\\msx\\code\\vasm\\compile.cmd",
-            "command": "D:\\MSX\\code\\vasm\\BuildTools\\VasmBuilder\\bin\\Release\\net9.0\\VasmBuilder.exe",
+            "command": "D:\\MSX\\code\\vasm\\bin\\VasmBuilder.exe",
             "args": [
                 "${fileBasename}",
                 "${fileDirname}"
             ],
             "options": {
-                "cwd": "D:\\MSX\\code\\vasm\\BuildTools\\VasmBuilder\\bin\\Release\\net9.0"
+                "cwd": "D:\\MSX\\code\\vasm\\bin"
             },
-             "group": {
+            "group": {
                 "kind": "build",
-                "isDefault": "**/*.as" 
+                "isDefault": "**/*.as"
             },
             "problemMatcher": {
-    "owner": "vasm",
-    "fileLocation": "absolute",
-    "pattern": {
-        "regexp": "^(error)\\s+\\d+\\s+in\\s+line\\s+(\\d+)\\s+of\\s+\"(.+?)\":\\s+(.*)$",
-        "severity": 1,
-        "line": 2,
-        "file": 3,
-        "message": 0
-    }
-},
+                "owner": "vasm",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^(error)\\s+\\d+\\s+in\\s+line\\s+(\\d+)\\s+of\\s+\"(.+?)\":\\s+(.*)$",
+                    "severity": 1,
+                    "line": 2,
+                    "file": 3,
+                    "message": 0
+                }
+            },
             "presentation": {
                 "reveal": "always",
                 "panel": "shared"
