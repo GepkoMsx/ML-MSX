@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.Design;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace XRefGenerator;
 
-static class Searcher
+static class XrefHelper
 {
     public static string FindStartAddress(string path)
     {
@@ -29,12 +28,12 @@ static class Searcher
         List<string> allOFiles = [];
         foreach (var sourcefile in allfiles)
         {
-            var declaredLabels = Searcher.FindDeclaredLabels(sourcefile);
-            var usedLabels = Searcher.FindUsedLabels(sourcefile).Distinct();
+            var declaredLabels = XrefHelper.FindDeclaredLabels(sourcefile);
+            var usedLabels = XrefHelper.FindUsedLabels(sourcefile).Distinct();
             var usedNotDeclared = usedLabels.Where(l => !declaredLabels.Contains(l)).Distinct().ToList();
 
             // find all .o files that contain the cross-references
-            var ofiles = Searcher.FindOfiles(usedNotDeclared, ofileLabels);
+            var ofiles = XrefHelper.FindOfiles(usedNotDeclared, ofileLabels);
             // search all .o files for the cross-references
             allOFiles.AddRange(ofiles);
             // now do this recursively for the .o files we found, to find more cross-references
@@ -213,18 +212,4 @@ static class Searcher
                     .Select(m => m.Value)
                     .ToArray();
     }
-    
-    private static string? GetCreatedVariable(string line)
-    {
-        string pattern = @"(?:\.set|\.equ|\.equiv|\.assign)\s+(\w+)";
-        var match = Regex.Match(line, pattern, RegexOptions.IgnoreCase);
-        if (match.Success)
-        {
-            return match.Groups[1].Value;
-        }
-
-        return null;
-    }
-
-
 }

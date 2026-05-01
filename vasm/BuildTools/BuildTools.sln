@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36429.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymParser", "SymParser\SymParser.csproj", "{82B8BB53-30B8-96D7-2C3F-D1A39F2A7C78}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XRefGenerator", "XRefGenerator\XRefGenerator.csproj", "{798D65E5-A857-43B6-9B18-CFF35D032ED6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VlinkSymToVasm", "VlinkSymToVasm\VlinkSymToVasm.csproj", "{E03FFC24-0266-46B3-AA26-FC43640BA900}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VasmBuilder", "VasmBuilder\VasmBuilder.csproj", "{6D54A333-3F62-4F99-9BB6-436F4E84ED3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{82B8BB53-30B8-96D7-2C3F-D1A39F2A7C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82B8BB53-30B8-96D7-2C3F-D1A39F2A7C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82B8BB53-30B8-96D7-2C3F-D1A39F2A7C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82B8BB53-30B8-96D7-2C3F-D1A39F2A7C78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{798D65E5-A857-43B6-9B18-CFF35D032ED6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E03FFC24-0266-46B3-AA26-FC43640BA900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D54A333-3F62-4F99-9BB6-436F4E84ED3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D54A333-3F62-4F99-9BB6-436F4E84ED3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D54A333-3F62-4F99-9BB6-436F4E84ED3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D54A333-3F62-4F99-9BB6-436F4E84ED3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

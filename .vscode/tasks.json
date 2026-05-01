@@ -6,11 +6,15 @@
         {
             "label": "Assemble MSX File",
             "type": "shell",
-            "command": "d:\\msx\\code\\vasm\\compile.cmd",
+            //"command": "d:\\msx\\code\\vasm\\compile.cmd",
+            "command": "D:\\MSX\\code\\vasm\\BuildTools\\VasmBuilder\\bin\\Release\\net9.0\\VasmBuilder.exe",
             "args": [
                 "${fileBasename}",
                 "${fileDirname}"
             ],
+            "options": {
+                "cwd": "D:\\MSX\\code\\vasm\\BuildTools\\VasmBuilder\\bin\\Release\\net9.0"
+            },
              "group": {
                 "kind": "build",
                 "isDefault": "**/*.as" 
