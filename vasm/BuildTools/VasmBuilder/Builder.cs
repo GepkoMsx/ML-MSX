@@ -18,25 +18,35 @@ public class VasmWorker(string[] args, IOptions<BuildSettings> config, IHostAppl
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Console.WriteLine("Generating macro include file");
-        GenerateMacroIncludeFile();
-
-        Console.WriteLine($"Building {filetoBuild}");
-        await Build();
-
-        Console.WriteLine("Cleaning symbolfile");
-        BeautifySym();
-
-        if (filetoBuild.EndsWith(".as"))
+        try
         {
-            Console.WriteLine("Linking");
-            await Link();
 
-            Console.WriteLine("Converting symbols.sym file to vasm format");
-            ConvertLinkSymbol();
+            Console.WriteLine("Generating macro include file");
+            GenerateMacroIncludeFile();
 
-            Console.Write($"Moving binary to {settings.DestFolder}\\");
-            CopyToOutput();
+            Console.WriteLine($"Building {filetoBuild}");
+            await Build();
+
+            Console.WriteLine("Cleaning symbolfile");
+            BeautifySym();
+
+            if (filetoBuild.EndsWith(".as"))
+            {
+                Console.WriteLine("Linking");
+                await Link();
+
+                Console.WriteLine("Converting symbols.sym file to vasm format");
+                ConvertLinkSymbol();
+
+                Console.Write($"Moving binary to {settings.DestFolder}\\");
+                CopyToOutput();
+            }
+        } 
+        catch (Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Error.WriteLine(ex.Message);
+            Console.ResetColor();
         }
 
         lifetime.StopApplication();
