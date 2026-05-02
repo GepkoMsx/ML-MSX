@@ -12,8 +12,8 @@ public class VasmWorker(string[] args, IOptions<BuildSettings> config, IHostAppl
     private readonly BuildSettings settings = config.Value;
     private readonly IHostApplicationLifetime lifetime = lifetime;
 
-    private string SymFile => Path.Combine(Path.GetDirectoryName(filetoBuild), Path.GetFileNameWithoutExtension(filetoBuild) + ".sym");
-    private string ObjFile => Path.Combine(Path.GetDirectoryName(filetoBuild), Path.GetFileNameWithoutExtension(filetoBuild) + ".o");
+    private string SymFile => Path.Combine(Path.GetDirectoryName(filetoBuild)??"", Path.GetFileNameWithoutExtension(filetoBuild) + ".sym");
+    private string ObjFile => Path.Combine(Path.GetDirectoryName(filetoBuild)??"", Path.GetFileNameWithoutExtension(filetoBuild) + ".o");
 
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -108,19 +108,21 @@ public class VasmWorker(string[] args, IOptions<BuildSettings> config, IHostAppl
         handle.Close();
     }
 
-    public List<string> GetObjectFiles()
+    public IEnumerable<string> GetObjectFiles()
     {
         var includefolders = settings.IncludeFolders;
         var dir = Path.GetDirectoryName(filetoBuild);
         if (dir != null)
         {
+            var subdirs = Directory.GetDirectories(dir, "*", SearchOption.AllDirectories);
+            includefolders.AddRange(subdirs);
             includefolders.Add(dir);
         }
 
         // find all included files (recursively) and add them to the list of files to process
         List<string> allfiles = [];
         allfiles.Add(filetoBuild);   // add the main file to the list of files to process
-        allfiles = allfiles.Concat(XrefHelper.FindIncludes(filetoBuild, includefolders)).Distinct().ToList();
+        allfiles = [.. allfiles.Concat(XrefHelper.FindIncludes(filetoBuild, includefolders)).Distinct()];
         var ofileLabels = XrefHelper.MakeGlobalList(includefolders);
 
         List<string> allOFiles = [];
@@ -137,7 +139,7 @@ public class VasmWorker(string[] args, IOptions<BuildSettings> config, IHostAppl
             allOFiles.AddRange(oFiles);
         }
 
-        return allOFiles.Distinct().ToList();
+        return allOFiles.Distinct();
     }
 
     public async Task Build()
@@ -159,7 +161,7 @@ public class VasmWorker(string[] args, IOptions<BuildSettings> config, IHostAppl
             WorkingDirectory = Path.GetDirectoryName(settings.Vasm)
         };
 
-        using Process process = new Process { StartInfo = startInfo };
+        using var process = new Process { StartInfo = startInfo };
         process.Start();
 
         string output = await process.StandardOutput.ReadToEndAsync();
