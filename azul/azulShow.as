@@ -1,3 +1,4 @@
+; .org 0x8000
 
 ;; the first screen tht shows the logo (banner2.RL8)
 ;; autostarted by the loader.
@@ -7,55 +8,45 @@
     
 ; Loads the wait-screen
 
-; ==[ Constants ]===============================================
-    include "Constants.as"
+    .section .text
 
-    org $8000
-    
-; ==[ Program ]======================================
+    .include "Macros.asc"
+
 Main:
     DI
-    ld bc, $0101                   ; Swap picture index 1 in memory $4000
+    ld bc, 0x0101                   ; Swap picture index 1 in memory 0x4000
     call MEMRESET
     
-    ld HL, Screen8_Table           ; SCREEN 8
-    call screen                    ; starts disabled.
+    SetScreen 8, off
     
-    ld a, 0
-    call Border
+    SetVDP 7, 0                     ; Border color 0
     
     ld HL, BLACKSCREEN             ; make screen black with hmmv page 0
     call HMMV
     call Waitvdp
     
-    ld HL, HMMCDATA
-    call HMMCNoData                ; prepare copy picture.
-    ld HL, $4000                   ; NOW THE RLE TRICK
+    ld HL, HMMCDATA                ; prepare copy picture.
+    call HMMCNoData                
+
+    ld HL, 0x4000                  ; NOW THE RLE TRICK
     call RLESendVDP
     
-    ld a, $40                      ; Screen on
-    out ($99), a
-    ld a, $81                      ; Schrijf naar Register #1
-    out ($99), a
+    SetVDP 1, 0x40                 ; Screen on
     
     EI
     ret
 
-; ==[ libaries ]====================================================
-    include "screen.asc"
-    include "RLESendVDP.asc"
-    include "border.asc"
-    include "hmmv.asc"
-    include "waitvdp.asc"
-    include "HMMCNoData.asc"
 
-; ==[ Data ]====================================================
-    
-BLACKSCREEN:
-    dw 0, 0, 256, 256              ; HMMV header voor zwart scherm page0
-    db 0, 0, $C0
+    .section .data
+        
+BLACKSCREEN:                       ; HMMV header voor zwart scherm page0
+    .word 0, 0                     ; dx,dy
+    .word 256, 256                 ; mx, my
+    .byte 0x00, 0x00, 0xC0         ; col, arg, HMMV
+
 HMMCDATA:
-    dw 6, 0                        ; dx,dy
-    dw 244, 166                    ; mx,my
-    db 0, 0, $F0                   ; col, arg, HMMC
+    .word 6, 0                     ; dx,dy
+    .word 244, 166                 ; mx,my
+    .byte 0x00, 0x00, 0xF0         ; col, arg, HMMC
+    
     
