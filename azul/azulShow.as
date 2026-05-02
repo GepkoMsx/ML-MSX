@@ -14,19 +14,19 @@
 
 Main:
     DI
-    ld bc, 0x0101                   ; Swap picture index 1 in memory 0x4000
+    ld bc, 0x0101                  ; Swap picture index 1 in memory 0x4000
     call MEMRESET
     
     SetScreen 8, off
     
-    SetVDP 7, 0                     ; Border color 0
+    SetVDP 7, 0                    ; Border color 0
     
     ld HL, BLACKSCREEN             ; make screen black with hmmv page 0
-    call HMMV
+    VdpCopy HMMV, HL
     call Waitvdp
     
     ld HL, HMMCDATA                ; prepare copy picture.
-    call HMMCNoData                
+    call HMMCNoData
 
     ld HL, 0x4000                  ; NOW THE RLE TRICK
     call RLESendVDP
@@ -38,11 +38,11 @@ Main:
 
 
     .section .data
-        
+    
 BLACKSCREEN:                       ; HMMV header voor zwart scherm page0
     .word 0, 0                     ; dx,dy
     .word 256, 256                 ; mx, my
-    .byte 0x00, 0x00, 0xC0         ; col, arg, HMMV
+    .byte 0x00, 0x00               ; col, arg, HMMV
 
 HMMCDATA:
     .word 6, 0                     ; dx,dy

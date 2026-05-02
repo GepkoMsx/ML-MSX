@@ -5,9 +5,9 @@
     
 Main:                              ; TODO: Maybe choose between 1 or 2 player game?
     DI
-    CALL Azul2PressSpace     ; shows blinking message and waits for space
+    CALL Azul2PressSpace           ; shows blinking message and waits for space
 
-    ld bc, 0x0201                   ; Swap pictures index 2 in memory $4000
+    ld bc, 0x0201                  ; Swap pictures index 2 in memory $4000
     call MEMRESET
     
     CALL Azul3Playfield            ; Draws the playfield
@@ -25,5 +25,5 @@ Main:                              ; TODO: Maybe choose between 1 or 2 player ga
     .global TIMER
 
 TIMER:
-    .byte 0x00                         ; for use in a gameloop (to blink etc)
+    .byte 0x00                     ; for use in a gameloop (to blink etc)
     

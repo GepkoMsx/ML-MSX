@@ -1,5 +1,3 @@
-;; CALL SetVramWrite
-
 
 ;; HL = address. (make sure right 16k vram page is selected)
     .macro SetVramWrite

@@ -12,23 +12,23 @@
 ; so HMMV, LMMV, HMMC, LMMC: 10 bytes, others 14 bytes
 
 
-; cmd is one of the VDP_* commands from constants.asc
+; cmd is one of the VDP commands from constants.asc
 ; ptrData is the address of the copy-block of data.
 ; bytesColor is nr of bytes to send as color-data.
 ; ptrCOlor is the address of the color-data block.
     .macro VdpCopy cmd ptrCmdData bytesColor ptrColor ; ptrCmdData can be HL, ptrColor can be DE, or constants. Last 2 params only for HMMC/LMMC'
     .nolist
     .set nrbytes, 14
-    .ifc \cmd, VDP_HMMV
+    .ifc \cmd, HMMV
         .set nrbytes, 10
     .endif
-    .ifc \cmd, VDP_LMMV
+    .ifc \cmd, LMMV
         .set nrbytes, 10
     .endif
-    .ifc \cmd, VDP_HMMC
+    .ifc \cmd, HMMC
         .set nrbytes, 10
     .endif
-    .ifc \cmd, VDP_LMMC
+    .ifc \cmd, LMMC
         .set nrbytes, 10
     .endif
 
