@@ -10,17 +10,17 @@
     
 ; Compare 2 strings in <HL> with <DE> for first <B> bytes.
 
-.macro CompareStrings
+    .macro CompareStrings
     push de
     push hl
     
 CompStr_loop\@:
     ld a, (de)
     cp (hl)                        ; Vergelijk (HL) met Accumulator
-    jr nz, CompStr_end\@             ; Stop direct als ze niet gelijk zijn (Z-vlag = 0)
+    jr nz, CompStr_end\@           ; Stop direct als ze niet gelijk zijn (Z-vlag = 0)
     inc hl
     inc de
-    djnz CompStr_loop\@              ; Verlaag B en spring terug als B > 0
+    djnz CompStr_loop\@            ; Verlaag B en spring terug als B > 0
     
 CompStr_end\@:
     pop hl

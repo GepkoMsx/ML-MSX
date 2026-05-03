@@ -6,5 +6,5 @@
     LD A, \reg
     OUT (0xA0),A
     LD A,\val
-    OUT (0xA1),A           
+    OUT (0xA1),A
     .endm
