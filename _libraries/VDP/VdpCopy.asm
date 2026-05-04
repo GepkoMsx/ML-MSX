@@ -55,7 +55,7 @@
     out (c), a
 
     .ifnb \bytesColor              ; we got colordata aswell, so send it (for HMMC and LMMC)
-      SetVDP 17, 44                ; geen increment ($80) naar register 44
+      SetVDP 17, 44+0x80           ; geen increment ($80) naar register 44
       ld HL, \ptrColor
       ld DE, \bytesColor           ; remove 1, has been sent in cmd
       dec de

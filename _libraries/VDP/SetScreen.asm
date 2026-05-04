@@ -20,9 +20,11 @@
          .set IE1\@, 0x10
      .endif
 
+     .set R2\@, 0x06               ; for screen1,2,3,4
      .set M12\@, 0x00
      .if \nr == 0
          .set M12\@, 0x10
+         .set R2\@, 0x00
      .elseif \nr == 3
          .set M12\@, 0x08
      .endif
@@ -34,12 +36,16 @@
          .set M543\@, 0x04
      .elseif \nr == 5
          .set M543\@, 0x06
+         .set R2\@, 0x1F
      .elseif \nr == 6
          .set M543\@, 0x08
+         .set R2\@, 0x1F
      .elseif \nr == 7
          .set M543\@, 0x0A
+         .set R2\@, 0x1F
      .elseif \nr == 8
          .set M543\@, 0x0E
+         .set R2\@, 0x1F
      .endif
 
      .set BL\@, 0x00
@@ -63,6 +69,7 @@
       .list
       SetVDP 0, vdp0\@
       SetVDP 1, vdp1\@
+      SetVDP 2, R2\@
       SetVDP 8, 0x28
       SetVDP 9, 0x82
     .endm

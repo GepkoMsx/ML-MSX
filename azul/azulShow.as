@@ -19,15 +19,16 @@ Main:
     
     SetScreen 8, off
     
+    SetVDP 5, 0xF3                 ; SAT op 0x7800    
+    SetVDP 11, 0x03                ; SPT op 0x6000
+
     SetVDP 7, 0                    ; Border color 0
     
     ld HL, BLACKSCREEN             ; make screen black with hmmv page 0
     VdpCopy HMMV, HL
     call Waitvdp
     
-    ld HL, HMMCDATA                ; prepare copy picture.
-    call HMMCNoData
-
+    VdpCopy HMMC, HMMCDATA         ; prepare copy picture.
     ld HL, 0x4000                  ; NOW THE RLE TRICK
     call RLESendVDP
     
@@ -47,6 +48,7 @@ BLACKSCREEN:                       ; HMMV header voor zwart scherm page0
 HMMCDATA:
     .word 6, 0                     ; dx,dy
     .word 244, 166                 ; mx,my
-    .byte 0x00, 0x00, 0xF0         ; col, arg, HMMC
+    .byte 0x00, 0x00               ; col, arg, HMMC
+    
     
     

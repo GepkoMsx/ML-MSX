@@ -14,7 +14,7 @@ Main:                              ; TODO: Maybe choose between 1 or 2 player ga
     CALL Azul4EnterName            ; Ask players to enter the name + enterlogic.
     CALL Azul5StartGame            ; start the game.
 
-    ld DE, 50
+    ld DE, 500
     CALL Wait                      ; Wait <DE> * 0.1 secs.
     
 	; Exit the program and return to MSX-DOS
