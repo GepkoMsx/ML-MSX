@@ -52,7 +52,7 @@ static class XrefHelper
         foreach (var lineWcomment in lines)
         {
             var line = lineWcomment.Split(';')[0]; // remove comments
-            if (line.Contains(".include ") || line.Contains(".INCLUDE "))
+            if (line.Contains(".include ", StringComparison.CurrentCultureIgnoreCase))
             {
                 // extract the included file name
                 var include = line.Split('"')[1];

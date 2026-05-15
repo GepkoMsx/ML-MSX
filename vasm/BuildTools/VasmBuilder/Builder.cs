@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
-using System.Reflection.Metadata;
 using XRefGenerator;
 
 namespace VasmBuilder;
@@ -15,12 +14,10 @@ public class VasmWorker(string[] args, IOptions<BuildSettings> config, IHostAppl
     private string SymFile => Path.Combine(Path.GetDirectoryName(filetoBuild)??"", Path.GetFileNameWithoutExtension(filetoBuild) + ".sym");
     private string ObjFile => Path.Combine(Path.GetDirectoryName(filetoBuild)??"", Path.GetFileNameWithoutExtension(filetoBuild) + ".o");
 
-
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
-
             Console.WriteLine("Generating macro include file");
             GenerateMacroIncludeFile();
 
