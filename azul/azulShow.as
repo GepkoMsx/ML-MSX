@@ -19,7 +19,7 @@ Main:
     
     SetScreen 8, off
     
-    SetVDP 5, 0xF3                 ; SAT op 0x7800    
+    SetVDP 5, 0xF3                 ; SAT op 0x7800
     SetVDP 11, 0x03                ; SPT op 0x6000
 
     SetVDP 7, 0                    ; Border color 0

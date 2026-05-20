@@ -5,7 +5,7 @@
     
 Main:                              ; TODO: Maybe choose between 1 or 2 player game?
     DI
-    CALL Azul2PressSpace           ; shows blinking message and waits for space
+    ;CALL Azul2PressSpace           ; shows blinking message and waits for space
 
     ld bc, 0x0201                  ; Swap pictures index 2 in memory $4000
     call MEMRESET
@@ -15,10 +15,13 @@ Main:                              ; TODO: Maybe choose between 1 or 2 player ga
     CALL Azul5StartGame            ; start the game.
 
     ld DE, 500
-    CALL Wait                      ; Wait <DE> * 0.1 secs.
+  ;  CALL Wait                      ; Wait <DE> * 0.1 secs.
     
 	; Exit the program and return to MSX-DOS
-    CALL ReturnToDos
+   ; CALL ReturnToDos
+STOPHERE:
+    halt
+    jr STOPHERE
     ret
 
     .section .data
