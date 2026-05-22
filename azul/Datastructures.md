@@ -5,6 +5,10 @@
 _in azul/data/colormap.asc_  
 16 bytes, 2 bytes per color in format  0xRB 0x-G  
 
+## CURRENTPLAYER
+_in azul/azul.as_
+the player whose turn it is. (0 or 1)
+
 ## FontData
 _in azul/data/font.asc_
 Array of bytes, 12 bytes per letter/character. 

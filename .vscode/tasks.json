@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Assemble MSX File",
+            "label": "Build File",
             "type": "shell",
             //"command": "d:\\msx\\code\\vasm\\compile.cmd",
             "command": "D:\\MSX\\code\\vasm\\bin\\VasmBuilder.exe",
@@ -17,7 +17,7 @@
             },
             "group": {
                 "kind": "build",
-                "isDefault": "**/*.as"
+                "isDefault": "**/*.as?"
             },
             "problemMatcher": {
                 "owner": "vasm",
@@ -33,6 +33,38 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "shared"
+            }
+        },
+        {
+            "label": "Build Project",
+            "type": "shell",
+            "command": "D:\\MSX\\code\\azul\\buildazul.cmd",
+            "args": [
+                "/lib",
+                "/main"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": "**/*.as?"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Build full Project",
+            "type": "shell",
+            "command": "D:\\MSX\\code\\azul\\buildazul.cmd",
+            "group": {
+                "kind": "build",
+                "isDefault": "**/*.as?"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
             }
         }
     ]

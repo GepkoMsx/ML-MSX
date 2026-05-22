@@ -14,6 +14,8 @@ Main:                              ; TODO: Maybe choose between 1 or 2 player ga
     CALL Azul4EnterName            ; Ask players to enter the name + enterlogic.
     CALL Azul5StartGame            ; start the game.
 
+    CALL Azul6FactorySupply        ; take tiles
+
     ld DE, 500
   ;  CALL Wait                      ; Wait <DE> * 0.1 secs.
     
@@ -29,4 +31,5 @@ STOPHERE:
 
 TIMER:
     .byte 0x00                     ; for use in a gameloop (to blink etc)
-    
+CURRENTPLAYER:
+    .byte 0x00                     ; 0 = player 1, 1 = player2
