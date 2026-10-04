@@ -16,11 +16,11 @@ Main:                              ; TODO: Maybe choose between 1 or 2 player ga
 
     CALL Azul6FactorySupply        ; take tiles
 
-    ld DE, 500
-  ;  CALL Wait                      ; Wait <DE> * 0.1 secs.
+ ;   ld DE, 500
+ ;   CALL Wait                      ; Wait <DE> * 0.1 secs.
     
 	; Exit the program and return to MSX-DOS
-   ; CALL ReturnToDos
+;    CALL ReturnToDos
 STOPHERE:
     halt
     jr STOPHERE

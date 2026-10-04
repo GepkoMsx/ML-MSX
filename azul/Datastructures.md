@@ -53,6 +53,10 @@ _in azul/data/tilePostions.asc_
 Screeen coordinates for the tile-locations. Factories go clockwise starting topleft.   
 ( 5 factories, 4 tiles per factory, so 5x4x2 = 40 bytes )
 
+## SELECTEDTILE
+_in azul/azul6FactorySupply.asc_
+2 bytes, 1st byte is the tile-type, 2nd byte is the amount 
+
 ## TILESONTABLEPOSITIONS
 _in azul/data/tilePostions.asc_  
 Screeen coordinates for the tile-locations. (5x 2 = 10 bytes).
