@@ -5,7 +5,7 @@
     
 Main:                              ; TODO: Maybe choose between 1 or 2 player game?
     DI
-    ;CALL Azul2PressSpace           ; shows blinking message and waits for space
+    CALL Azul2PressSpace           ; shows blinking message and waits for space
 
     ld bc, 0x0201                  ; Swap pictures index 2 in memory $4000
     call MEMRESET
@@ -14,7 +14,7 @@ Main:                              ; TODO: Maybe choose between 1 or 2 player ga
     CALL Azul4EnterName            ; Ask players to enter the name + enterlogic.
     CALL Azul5StartGame            ; start the game.
 
-    CALL Azul6FactorySupply        ; take tiles
+    CALL Azul6DraftRound           ; alternate human-controlled turns until all tiles are drafted
 
  ;   ld DE, 500
  ;   CALL Wait                      ; Wait <DE> * 0.1 secs.
@@ -27,7 +27,7 @@ STOPHERE:
     ret
 
     .section .data
-    .global TIMER
+    .global TIMER, CURRENTPLAYER
 
 TIMER:
     .byte 0x00                     ; for use in a gameloop (to blink etc)

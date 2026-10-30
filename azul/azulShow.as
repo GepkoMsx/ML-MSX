@@ -21,7 +21,6 @@ Main:
     
     SetVDP 5, 0xF3                 ; SAT op 0x7800
     SetVDP 11, 0x03                ; SPT op 0x6000
-
     SetVDP 7, 0                    ; Border color 0
     
     ld HL, BLACKSCREEN             ; make screen black with hmmv page 0
@@ -36,7 +35,6 @@ Main:
     
     EI
     ret
-
 
     .section .data
     

@@ -9,6 +9,10 @@ _in azul/data/colormap.asc_
 _in azul/azul.as_
 the player whose turn it is. (0 or 1)
 
+## Azul6DraftRound
+_in azul/azul6DraftRound.asc_
+Runs alternating player turns until all factory and center tiles have been drafted. Both players use the same keyboard controls; no computer-player logic is used.
+
 ## FontData
 _in azul/data/font.asc_
 Array of bytes, 12 bytes per letter/character. 
@@ -54,12 +58,32 @@ Screeen coordinates for the tile-locations. Factories go clockwise starting topl
 ( 5 factories, 4 tiles per factory, so 5x4x2 = 40 bytes )
 
 ## SELECTEDTILE
-_in azul/azul6FactorySupply.asc_
+_in azul/azul6-1FactorySupply.asc_
 2 bytes, 1st byte is the tile-type, 2nd byte is the amount 
 
 ## TILESONTABLEPOSITIONS
 _in azul/data/tilePostions.asc_  
 Screeen coordinates for the tile-locations. (5x 2 = 10 bytes).
+
+## HANDPOSITIONS
+_in azul/data/tilePositions.asc_
+
+Screen coordinates for up to 20 selected tiles, arranged in two rows at the bottom left of the screen.
+
+## PATTERNLINEPOSITIONS, PATTERNSELECTORPOSITIONS
+_in azul/data/tilePositions.asc_
+
+Screen coordinates for both player boards' five pattern lines and selector destinations. Pattern-line positions are ordered right-to-left to match the rules.
+
+## FLOORLINEPOSITIONS
+_in azul/data/tilePositions.asc_
+
+Screen coordinates for the seven floor-line spaces of each player, ordered left-to-right.
+
+## PATTERNLINECOUNTS, PATTERNLINETYPES, WALLTILES, FLOORLINECOUNTS, FLOORLINETILES
+_in azul/azul6-2PlaceOnPatternLine.asc_
+
+Gameplay state for each player's pattern lines, wall colors, and floor line. `0xFF` represents an empty tile/color slot.
 
 ## TILESWALL1POSITIONS
 _in azul/data/tilePostions.asc_  
